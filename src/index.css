@@ -1,0 +1,211 @@
+@import '@fontsource-variable/outfit';
+@import '@fontsource-variable/readex-pro';
+@import '@fontsource-variable/plus-jakarta-sans';
+@import 'tailwindcss';
+
+/* Design system de Google Stitch (Material 3). Tailwind v4 lee el tema desde acá. */
+@theme {
+  --color-primary: #000251;
+  --color-on-primary: #ffffff;
+  --color-primary-container: #00058d;
+  --color-on-primary-container: #7983f7;
+  --color-primary-fixed: #e0e0ff;
+  --color-primary-fixed-dim: #bec2ff;
+  --color-on-primary-fixed: #00036b;
+  --color-on-primary-fixed-variant: #2e37aa;
+  --color-inverse-primary: #bec2ff;
+
+  --color-secondary: #006a60;
+  --color-on-secondary: #ffffff;
+  --color-secondary-container: #6af9e6;
+  --color-on-secondary-container: #007166;
+  --color-secondary-fixed: #6af9e6;
+  --color-secondary-fixed-dim: #47dcca;
+  --color-on-secondary-fixed: #00201c;
+  --color-on-secondary-fixed-variant: #005048;
+
+  --color-tertiary: #270900;
+  --color-on-tertiary: #ffffff;
+  --color-tertiary-container: #491700;
+  --color-on-tertiary-container: #d3754c;
+  --color-tertiary-fixed: #ffdbcd;
+  --color-tertiary-fixed-dim: #ffb597;
+  --color-on-tertiary-fixed: #360f00;
+  --color-on-tertiary-fixed-variant: #79310c;
+
+  --color-error: #ba1a1a;
+  --color-on-error: #ffffff;
+  --color-error-container: #ffdad6;
+  --color-on-error-container: #93000a;
+
+  --color-background: #f5faff;
+  --color-on-background: #111d25;
+  --color-surface: #f5faff;
+  --color-surface-bright: #f5faff;
+  --color-surface-dim: #cfdce6;
+  --color-surface-tint: #4851c3;
+  --color-surface-variant: #d8e4ef;
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-container-low: #eaf5ff;
+  --color-surface-container: #e3effa;
+  --color-surface-container-high: #ddeaf4;
+  --color-surface-container-highest: #d8e4ef;
+  --color-on-surface: #111d25;
+  --color-on-surface-variant: #454653;
+  --color-inverse-surface: #26323a;
+  --color-inverse-on-surface: #e6f2fd;
+  --color-outline: #767685;
+  --color-outline-variant: #c6c5d5;
+
+  /* Valores que Stitch usa "a mano" en el HTML y se repiten en varias pantallas */
+  --color-ink: #14181b;
+  --color-ink-soft: #57636c;
+  --color-line: #e2e8f0;
+  --color-field: #e0e3e7;
+  --color-page: #f1f4f8;
+  --color-panel: #f8fafc;
+  --color-teal: #39d2c0;
+  --color-teal-soft: #e6faf7;
+  --color-teal-ink: #0a423c;
+  --color-success: #249689;
+  --color-danger: #ff5963;
+
+  --spacing-space-xs: 0.25rem;
+  --spacing-space-sm: 0.5rem;
+  --spacing-space-md: 1rem;
+  --spacing-space-lg: 1.5rem;
+  --spacing-space-xl: 2rem;
+  --spacing-margin: 1rem;
+  --spacing-gutter: 1rem;
+  --spacing-margin-tablet: 1.5rem;
+  --spacing-margin-desktop: 2.5rem;
+  --spacing-gutter-desktop: 1.5rem;
+
+  --font-sans: 'Plus Jakarta Sans Variable', system-ui, sans-serif;
+  --font-readex: 'Readex Pro Variable', system-ui, sans-serif;
+  --font-headline-xl: 'Outfit Variable', sans-serif;
+  --font-headline-xl-mobile: 'Outfit Variable', sans-serif;
+  --font-headline-lg: 'Outfit Variable', sans-serif;
+  --font-headline-lg-mobile: 'Outfit Variable', sans-serif;
+  --font-headline-md: 'Outfit Variable', sans-serif;
+  --font-headline-sm: 'Outfit Variable', sans-serif;
+  --font-body-lg: 'Plus Jakarta Sans Variable', sans-serif;
+  --font-body-lg-bold: 'Plus Jakarta Sans Variable', sans-serif;
+  --font-body-md: 'Plus Jakarta Sans Variable', sans-serif;
+  --font-body-md-bold: 'Plus Jakarta Sans Variable', sans-serif;
+  --font-label-lg: 'Plus Jakarta Sans Variable', sans-serif;
+  --font-label-md: 'Plus Jakarta Sans Variable', sans-serif;
+  --font-label-sm: 'Plus Jakarta Sans Variable', sans-serif;
+
+  --text-headline-xl: 36px;
+  --text-headline-xl--line-height: 44px;
+  --text-headline-xl--letter-spacing: -0.02em;
+  --text-headline-xl--font-weight: 700;
+  --text-headline-xl-mobile: 28px;
+  --text-headline-xl-mobile--line-height: 36px;
+  --text-headline-xl-mobile--letter-spacing: -0.01em;
+  --text-headline-xl-mobile--font-weight: 700;
+  --text-headline-lg: 28px;
+  --text-headline-lg--line-height: 36px;
+  --text-headline-lg--letter-spacing: -0.01em;
+  --text-headline-lg--font-weight: 600;
+  --text-headline-lg-mobile: 24px;
+  --text-headline-lg-mobile--line-height: 32px;
+  --text-headline-lg-mobile--letter-spacing: -0.01em;
+  --text-headline-lg-mobile--font-weight: 600;
+  --text-headline-md: 22px;
+  --text-headline-md--line-height: 28px;
+  --text-headline-md--font-weight: 600;
+  --text-headline-sm: 18px;
+  --text-headline-sm--line-height: 24px;
+  --text-headline-sm--font-weight: 600;
+  --text-body-lg: 16px;
+  --text-body-lg--line-height: 24px;
+  --text-body-lg--font-weight: 400;
+  --text-body-lg-bold: 16px;
+  --text-body-lg-bold--line-height: 24px;
+  --text-body-lg-bold--font-weight: 600;
+  --text-body-md: 14px;
+  --text-body-md--line-height: 20px;
+  --text-body-md--font-weight: 400;
+  --text-body-md-bold: 14px;
+  --text-body-md-bold--line-height: 20px;
+  --text-body-md-bold--font-weight: 600;
+  --text-label-lg: 14px;
+  --text-label-lg--line-height: 20px;
+  --text-label-lg--letter-spacing: 0.01em;
+  --text-label-lg--font-weight: 600;
+  --text-label-md: 12px;
+  --text-label-md--line-height: 16px;
+  --text-label-md--letter-spacing: 0.02em;
+  --text-label-md--font-weight: 600;
+  --text-label-sm: 11px;
+  --text-label-sm--line-height: 14px;
+  --text-label-sm--letter-spacing: 0.04em;
+  --text-label-sm--font-weight: 700;
+}
+
+/* Entrada de la tarjeta de login (fade + subida, 300 ms) */
+@keyframes enter {
+  from {
+    opacity: 0;
+    transform: translateY(60px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.animate-enter {
+  animation: enter 300ms ease-in-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-enter {
+    animation: none;
+  }
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+/* Impresión / PDF: una hoja A4 con márgenes chicos y sin alturas fijas que la corten. */
+@page {
+  size: A4 portrait;
+  margin: 10mm;
+}
+
+@media print {
+  html,
+  body,
+  #root {
+    height: auto !important;
+    background: #fff !important;
+  }
+}
+
+body {
+  margin: 0;
+  background: var(--color-page);
+  color: var(--color-on-surface);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 20px;
+}
+
+/* Barra de scroll fina del menú lateral y de la tabla */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--color-outline-variant);
+  border-radius: 4px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: var(--color-page);
+}
