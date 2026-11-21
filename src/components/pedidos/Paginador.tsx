@@ -51,7 +51,7 @@ export default function Paginador({ pagina, ultimaPagina, desde, hasta, total, o
 
         {paginasVisibles(pagina, ultimaPagina).map((p, i) =>
           p === '…' ? (
-            <span key={`gap-${i}`} className="px-2 text-outline">
+            <span key={`gap-${i}`} className="px-2 font-medium text-on-surface-variant">
               …
             </span>
           ) : (

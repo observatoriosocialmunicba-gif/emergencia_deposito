@@ -295,15 +295,15 @@ export default function VerPedidoPage() {
           aria-label="Ruta de navegación"
           className="flex flex-wrap items-center gap-2 font-label-md text-label-md text-on-surface-variant"
         >
-          <Link to="/estado-pedidos" className="transition-colors hover:text-primary-container">
+          <Link to="/estado-pedidos" className="inline-flex min-h-[44px] items-center transition-colors hover:text-primary-container">
             Inicio
           </Link>
           <span>/</span>
-          <Link to="/solicitudes" className="transition-colors hover:text-primary-container">
+          <Link to="/solicitudes" className="inline-flex min-h-[44px] items-center transition-colors hover:text-primary-container">
             Pedidos
           </Link>
           <span>/</span>
-          <span className="font-body-md-bold text-on-surface">Pedido #{pedido.id}</span>
+          <span className="inline-flex min-h-[44px] items-center font-body-md-bold text-on-surface">Pedido #{pedido.id}</span>
         </nav>
         <button
           type="button"
@@ -362,12 +362,12 @@ export default function VerPedidoPage() {
               {formatFecha(pedido.fecha)}
             </p>
           </div>
-          <div className="flex items-center gap-3 print:hidden">
+          <div className="flex flex-col sm:flex-row flex-wrap w-full sm:w-auto items-stretch sm:items-center gap-2.5 print:hidden">
             {estado === 'Pendiente de Autorización' &&
               (rol === 'Administrador' || rol === 'Solicitante') && (
                 <Link
                   to={`/solicitudes/${pedido.id}/editar`}
-                  className="flex min-h-[44px] items-center gap-2 rounded-lg bg-primary-container px-4 font-label-lg text-label-lg font-bold text-white shadow-xs transition-colors hover:bg-primary-container/90 active:scale-[0.98]"
+                  className="flex min-h-[44px] w-full sm:w-auto items-center justify-center gap-2 rounded-lg border border-secondary bg-white px-4 font-label-lg text-label-lg font-bold text-secondary shadow-xs transition-colors hover:bg-secondary/5 active:scale-[0.98]"
                 >
                   <Edit2 className="h-4 w-4" />
                   <span>Editar solicitud</span>
@@ -376,7 +376,7 @@ export default function VerPedidoPage() {
             <button
               type="button"
               onClick={() => setModalVistaPrevia(true)}
-              className="flex min-h-[44px] items-center gap-2 rounded-lg border border-primary-container bg-white px-4 font-label-lg text-label-lg font-bold text-primary-container shadow-xs transition-colors hover:bg-primary-container/5 active:scale-[0.98]"
+              className="flex min-h-[44px] w-full sm:w-auto items-center justify-center gap-2 rounded-lg border border-primary-container bg-white px-4 font-label-lg text-label-lg font-bold text-primary-container shadow-xs transition-colors hover:bg-primary-container/5 active:scale-[0.98]"
             >
               <Eye className="h-4 w-4" />
               <span>Vista previa</span>
@@ -384,7 +384,7 @@ export default function VerPedidoPage() {
             <button
               type="button"
               onClick={handleImprimir}
-              className="flex min-h-[44px] items-center gap-2 rounded-lg border border-surface-variant bg-surface-container-low px-4 font-label-lg text-label-lg text-primary-container transition-colors hover:bg-surface-container"
+              className="flex min-h-[44px] w-full sm:w-auto items-center justify-center gap-2 rounded-lg border border-surface-variant bg-surface-container-low px-4 font-label-lg text-label-lg text-primary-container transition-colors hover:bg-surface-container"
             >
               <Printer className="h-4 w-4" />
               <span>Imprimir Copia</span>
@@ -393,13 +393,13 @@ export default function VerPedidoPage() {
         </div>
 
         {/* Barra de Acciones según Estado */}
-        <div className="mt-4 border-t border-surface-container pt-4 print:hidden">
+        <div className="mt-4 pt-1 print:hidden">
           {estado === 'Pendiente de Autorización' && (
             <div className="flex flex-wrap items-center justify-between gap-3 rounded-lg bg-surface-bright p-4">
               <div>
-                <h3 className="font-body-md-bold text-body-md-bold text-primary">
+                <h2 className="font-body-md-bold text-body-md-bold text-primary">
                   Gestión de Autorización
-                </h3>
+                </h2>
                 <p className="text-xs text-on-surface-variant">
                   {puedeAutorizar
                     ? 'Autorice el pedido para habilitar su asignación de logística o rechácelo indicando motivo.'
@@ -434,9 +434,9 @@ export default function VerPedidoPage() {
           {estado === 'Para Asignar' && (
             <div className="flex flex-wrap items-center justify-between gap-3 rounded-lg bg-surface-bright p-4">
               <div>
-                <h3 className="font-body-md-bold text-body-md-bold text-primary">
+                <h2 className="font-body-md-bold text-body-md-bold text-primary">
                   Asignación de Entrega
-                </h3>
+                </h2>
                 <p className="text-xs text-on-surface-variant">
                   {puedeAsignar
                     ? 'Asigne el vehículo, el entregador encargado y la fecha programada.'
@@ -465,9 +465,9 @@ export default function VerPedidoPage() {
           {estado === 'Asignado' && (
             <div className="flex flex-wrap items-center justify-between gap-3 rounded-lg bg-surface-bright p-4">
               <div>
-                <h3 className="font-body-md-bold text-body-md-bold text-primary">
+                <h2 className="font-body-md-bold text-body-md-bold text-primary">
                   Registro de Resultado de Entrega
-                </h3>
+                </h2>
                 <p className="text-xs text-on-surface-variant">
                   {puedeEntregar
                     ? 'Indique si el pedido fue entregado con éxito o registre el motivo de no entrega.'
@@ -508,9 +508,9 @@ export default function VerPedidoPage() {
           {estado === 'No Entregado' && (
             <div className="flex flex-wrap items-center justify-between gap-3 rounded-lg bg-surface-bright p-4">
               <div>
-                <h3 className="font-body-md-bold text-body-md-bold text-primary">
+                <h2 className="font-body-md-bold text-body-md-bold text-primary">
                   Reintento de Entrega
-                </h3>
+                </h2>
                 <p className="text-xs text-on-surface-variant">
                   {puedeReintentar
                     ? 'Vuelva a poner este pedido en Para Asignar para programar un nuevo intento de entrega.'
@@ -622,7 +622,7 @@ export default function VerPedidoPage() {
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-2 md:grid-cols-3">
+          <dl className="grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-2 md:grid-cols-3">
             <div>
               <dt className="mb-0.5 font-label-md text-label-md text-on-surface-variant">Nombre y Apellido</dt>
               <dd className="font-body-md-bold text-body-md-bold text-on-surface">
@@ -666,12 +666,12 @@ export default function VerPedidoPage() {
                 <div className="flex items-center gap-2">
                   <MapPin className="h-5 w-5 text-secondary" />
                   <div>
-                    <span className="block font-label-md text-label-md text-on-surface-variant">
+                    <dt className="block font-label-md text-label-md text-on-surface-variant">
                       Coordenadas Georreferenciadas:
-                    </span>
-                    <span className="font-mono text-sm font-bold text-primary">
+                    </dt>
+                    <dd className="font-mono text-sm font-bold text-primary">
                       {pedido.coordenadas}
-                    </span>
+                    </dd>
                   </div>
                 </div>
               </div>
@@ -700,16 +700,16 @@ export default function VerPedidoPage() {
                 </div>
                 <div className="grid grid-cols-1 gap-2 sm:grid-cols-3 font-body-md text-body-md">
                   <div>
-                    <span className="text-xs text-on-surface-variant block">Vehículo:</span>
-                    <span className="font-semibold text-on-surface">{pedido.nombreVehiculo || '—'}</span>
+                    <dt className="text-xs text-on-surface-variant block">Vehículo:</dt>
+                    <dd className="font-semibold text-on-surface">{pedido.nombreVehiculo || '—'}</dd>
                   </div>
                   <div>
-                    <span className="text-xs text-on-surface-variant block">Encargado del Reparto / Entregador:</span>
-                    <span className="font-semibold text-on-surface">{pedido.entregador || '—'}</span>
+                    <dt className="text-xs text-on-surface-variant block">Encargado del Reparto / Entregador:</dt>
+                    <dd className="font-semibold text-on-surface">{pedido.entregador || '—'}</dd>
                   </div>
                   <div>
-                    <span className="text-xs text-on-surface-variant block">Fecha de Entrega:</span>
-                    <span className="font-semibold text-on-surface">{pedido.fechaEntrega || '—'}</span>
+                    <dt className="text-xs text-on-surface-variant block">Fecha de Entrega:</dt>
+                    <dd className="font-semibold text-on-surface">{pedido.fechaEntrega || '—'}</dd>
                   </div>
                 </div>
               </div>
@@ -732,7 +732,7 @@ export default function VerPedidoPage() {
                 </dd>
               </div>
             )}
-          </div>
+          </dl>
         </section>
       </div>
 
@@ -748,7 +748,7 @@ export default function VerPedidoPage() {
               Bienes e insumos solicitados para este pedido
             </p>
           </div>
-          <span className="inline-flex items-center gap-1 rounded-full bg-surface-container-low px-3 py-1 font-label-md text-label-md text-outline">
+          <span className="inline-flex items-center gap-1 rounded-full bg-surface-container-low px-3 py-1 font-label-md text-label-md text-on-surface-variant">
             <CheckCircle className="h-4 w-4" />
             {pedido.detalles.length} {pedido.detalles.length === 1 ? 'ítem' : 'ítems'}
           </span>
@@ -828,7 +828,7 @@ export default function VerPedidoPage() {
                     <strong>Artículo:</strong> {detalle.necesidad || '—'}
                   </div>
                   {detalle.observaciones && (
-                    <div className="mt-1 text-xs text-on-surface-variant">
+                    <div className="mt-1 text-sm text-on-surface-variant">
                       <strong>Obs:</strong> {detalle.observaciones}
                     </div>
                   )}
@@ -853,24 +853,6 @@ export default function VerPedidoPage() {
               Registro cargado en la plataforma de Emergencias de la Municipalidad de Córdoba.
             </p>
           </div>
-        </div>
-        <div className="flex w-full flex-col sm:flex-row items-center gap-3 sm:w-auto">
-          <button
-            type="button"
-            onClick={() => setModalVistaPrevia(true)}
-            className="flex min-h-[44px] w-full items-center justify-center gap-2 rounded-lg bg-primary-container px-5 py-2 font-label-lg text-label-lg font-bold text-white shadow-xs transition-colors hover:bg-primary-container/90 active:scale-[0.98] sm:w-auto"
-          >
-            <Eye className="h-4 w-4" />
-            <span>Vista previa</span>
-          </button>
-          <button
-            type="button"
-            onClick={handleImprimir}
-            className="flex min-h-[44px] w-full items-center justify-center gap-2 rounded-lg border border-primary-container px-5 py-2 font-label-lg text-label-lg text-primary-container transition-colors hover:bg-primary-container/5 sm:w-auto"
-          >
-            <Printer className="h-4 w-4" />
-            <span>Imprimir Comprobante</span>
-          </button>
         </div>
       </footer>
 

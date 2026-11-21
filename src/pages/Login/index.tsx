@@ -90,7 +90,7 @@ export default function LoginPage() {
               </label>
               <Link
                 to="/recuperar-password"
-                className="font-readex text-xs font-medium text-primary-container hover:underline"
+                className="inline-flex min-h-[44px] items-center font-readex text-xs font-medium text-primary-container hover:underline"
               >
                 ¿Olvidaste tu Contraseña?
               </Link>
@@ -160,11 +160,11 @@ export default function LoginPage() {
           </button>
         </form>
 
-        <p className="mt-4 border-t border-page pt-4 text-center font-readex text-xs text-ink-soft">
-          ¿No tienes Cuenta?{' '}
+        <p className="mt-4 flex flex-wrap items-center justify-center gap-1 border-t border-page pt-2 text-center font-readex text-xs text-ink-soft">
+          <span>¿No tienes Cuenta?</span>
           <Link
             to="/crear-cuenta"
-            className="font-semibold text-primary-container transition-colors hover:text-secondary hover:underline"
+            className="inline-flex min-h-[44px] items-center font-semibold text-primary-container transition-colors hover:text-secondary hover:underline"
           >
             Crear Una
           </Link>
@@ -172,7 +172,7 @@ export default function LoginPage() {
 
         <div className="mt-6 flex items-center gap-2.5 rounded-lg border border-line bg-panel p-3">
           <ShieldCheck size={18} className="shrink-0 text-primary-container" />
-          <p className="font-readex text-[11px] leading-snug text-ink-soft">
+          <p className="font-readex text-xs leading-snug text-ink-soft">
             Acceso restringido a personal autorizado.
           </p>
         </div>

@@ -142,7 +142,7 @@ export default function AutorizarPedidosPage() {
               void pedidos.refetch()
             }}
             title="Actualizar datos"
-            className="inline-flex min-h-[44px] items-center gap-1.5 rounded-lg border border-line bg-white px-3 py-2 font-label-md text-label-md text-ink shadow-xs transition-colors hover:bg-page"
+            className="inline-flex min-h-[44px] min-w-[44px] justify-center items-center gap-1.5 rounded-lg border border-line bg-white px-3 py-2 font-label-md text-label-md text-ink shadow-xs transition-colors hover:bg-page"
           >
             <RefreshCw
               size={16}

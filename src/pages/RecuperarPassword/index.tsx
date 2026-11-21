@@ -72,7 +72,7 @@ export default function RecuperarPasswordPage() {
           </div>
           <div className="inline-flex items-center gap-1.5 rounded-full border border-primary/20 bg-primary/10 px-3 py-1 backdrop-blur-xs">
             <span className="size-2 animate-pulse rounded-full bg-primary" />
-            <span className="font-label-sm text-[11px] font-bold tracking-wider text-primary uppercase">
+            <span className="font-label-sm text-xs font-bold tracking-wider text-primary uppercase">
               Recuperación de Acceso
             </span>
           </div>

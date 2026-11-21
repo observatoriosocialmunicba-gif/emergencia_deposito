@@ -27,7 +27,7 @@ export default function TarjetaEstado({ conteo, activo, ancha = false, onSelecci
       style={activo ? undefined : { borderColor: paleta.borde }}
     >
       {activo && (
-        <span className="absolute right-0 top-0 rounded-bl bg-success px-2 py-0.5 text-[10px] font-bold text-white">
+        <span className="absolute right-0 top-0 rounded-bl bg-secondary px-2 py-0.5 text-xs font-bold text-white">
           ACTIVO
         </span>
       )}
@@ -51,7 +51,7 @@ export default function TarjetaEstado({ conteo, activo, ancha = false, onSelecci
           {conteo.cantidad ?? 0}
         </span>
         <span
-          className={`mt-1 line-clamp-1 text-[13px] ${
+          className={`mt-1 line-clamp-2 text-xs sm:text-[13px] leading-snug ${
             activo ? 'font-bold text-primary-container' : 'font-medium text-ink-soft'
           }`}
         >

@@ -4,6 +4,7 @@ import {
   ChevronRight,
   CircleAlert,
   Edit2,
+  Filter,
   Lock,
   Power,
   RefreshCw,
@@ -48,6 +49,12 @@ export default function UsuariosPage() {
   const [estadoFiltro, setEstadoFiltro] = useState<
     'todos' | 'activos' | 'inactivos' | 'pendientes'
   >('todos')
+  const [mostrarFiltrosMovil, setMostrarFiltrosMovil] = useState(false)
+
+  const filtrosActivos =
+    (rolFiltro !== 'todos' ? 1 : 0) +
+    (areaFiltro !== 'todas' ? 1 : 0) +
+    (estadoFiltro !== 'todos' ? 1 : 0)
   const [pagina, setPagina] = useState(0)
 
   // Modales
@@ -179,7 +186,138 @@ export default function UsuariosPage() {
 
       {/* Barra de Filtros y Búsqueda */}
       <div className="space-y-3 rounded-xl border border-line bg-white p-space-md shadow-xs">
-        <div className="grid grid-cols-1 gap-3 md:grid-cols-4">
+        {/* Vista Móvil: Búsqueda y Botón Filtros */}
+        <div className="flex flex-col gap-3 md:hidden">
+          <div className="flex items-center gap-2">
+            <div className="relative flex-1">
+              <Search
+                size={18}
+                className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-outline"
+              />
+              <input
+                type="search"
+                value={texto}
+                onChange={(e) => {
+                  setTexto(e.target.value)
+                  setPagina(0)
+                }}
+                placeholder="Nombre o DNI completo"
+                aria-label="Buscar usuarios por nombre o DNI"
+                className="min-h-[44px] w-full rounded-lg border border-field bg-white pl-9 pr-3 font-body-md text-sm text-ink focus:border-secondary focus:outline-none focus:ring-2 focus:ring-secondary/20"
+              />
+            </div>
+            <button
+              type="button"
+              onClick={() => setMostrarFiltrosMovil(!mostrarFiltrosMovil)}
+              className={`inline-flex min-h-[44px] items-center gap-1.5 rounded-lg border px-3 py-2 font-label-md text-sm font-semibold transition-colors ${
+                filtrosActivos > 0 || mostrarFiltrosMovil
+                  ? 'border-secondary bg-surface-container text-secondary'
+                  : 'border-field bg-white text-ink hover:bg-page'
+              }`}
+            >
+              <Filter size={18} />
+              <span>Filtros</span>
+              {filtrosActivos > 0 && (
+                <span className="flex size-5 items-center justify-center rounded-full bg-secondary text-xs font-bold text-white">
+                  {filtrosActivos}
+                </span>
+              )}
+            </button>
+          </div>
+
+          {/* Filtros Plegables en Móvil */}
+          {mostrarFiltrosMovil && (
+            <div className="space-y-2.5 border-t border-line/60 pt-3">
+              <div>
+                <label className="mb-1 block text-xs font-semibold text-on-surface-variant">
+                  Rol
+                </label>
+                <select
+                  value={rolFiltro}
+                  onChange={(e) => {
+                    setRolFiltro(e.target.value as Rol | 'todos')
+                    setPagina(0)
+                  }}
+                  aria-label="Filtrar por rol móvil"
+                  className="min-h-[44px] w-full rounded-lg border border-field bg-white px-3 font-body-md text-sm text-ink focus:border-secondary focus:outline-none focus:ring-2 focus:ring-secondary/20"
+                >
+                  <option value="todos">Todos los roles</option>
+                  <option value="Administrador">Administrador</option>
+                  <option value="Asignador">Asignador</option>
+                  <option value="Solicitante">Solicitante</option>
+                  <option value="No Asignado">No Asignado</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="mb-1 block text-xs font-semibold text-on-surface-variant">
+                  Área
+                </label>
+                <select
+                  value={areaFiltro}
+                  onChange={(e) => {
+                    const val = e.target.value
+                    setAreaFiltro(val === 'todas' ? 'todas' : Number(val))
+                    setPagina(0)
+                  }}
+                  aria-label="Filtrar por área móvil"
+                  className="min-h-[44px] w-full rounded-lg border border-field bg-white px-3 font-body-md text-sm text-ink focus:border-secondary focus:outline-none focus:ring-2 focus:ring-secondary/20"
+                >
+                  <option value="todas">Todas las áreas</option>
+                  {areasQuery.data?.map((a) => (
+                    <option key={a.id} value={a.id}>
+                      {a.nombre}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div>
+                <label className="mb-1 block text-xs font-semibold text-on-surface-variant">
+                  Estado
+                </label>
+                <select
+                  value={estadoFiltro}
+                  onChange={(e) => {
+                    setEstadoFiltro(
+                      e.target.value as
+                        | 'todos'
+                        | 'activos'
+                        | 'inactivos'
+                        | 'pendientes',
+                    )
+                    setPagina(0)
+                  }}
+                  aria-label="Filtrar por estado móvil"
+                  className="min-h-[44px] w-full rounded-lg border border-field bg-white px-3 font-body-md text-sm text-ink focus:border-secondary focus:outline-none focus:ring-2 focus:ring-secondary/20"
+                >
+                  <option value="todos">Todos los estados</option>
+                  <option value="activos">Activos</option>
+                  <option value="inactivos">Inactivos</option>
+                  <option value="pendientes">Pendientes de habilitación</option>
+                </select>
+              </div>
+
+              {filtrosActivos > 0 && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setRolFiltro('todos')
+                    setAreaFiltro('todas')
+                    setEstadoFiltro('todos')
+                    setPagina(0)
+                  }}
+                  className="flex min-h-[44px] w-full items-center justify-center rounded-lg border border-outline-variant bg-surface-container py-2 text-xs font-bold text-primary hover:bg-surface-container-high"
+                >
+                  Restablecer filtros
+                </button>
+              )}
+            </div>
+          )}
+        </div>
+
+        {/* Vista Escritorio: Barra de 4 columnas */}
+        <div className="hidden md:grid md:grid-cols-4 gap-3">
           {/* Búsqueda */}
           <div className="relative md:col-span-1">
             <Search
@@ -324,7 +462,7 @@ export default function UsuariosPage() {
                           <div className="flex items-center gap-2">
                             <span>{u.nombreCompleto || 'Sin nombre'}</span>
                             {esPropio && (
-                              <span className="rounded bg-primary-container/10 px-1.5 py-0.5 text-[11px] font-bold text-primary-container">
+                              <span className="rounded bg-primary-container/10 px-1.5 py-0.5 text-xs font-bold text-primary-container">
                                 Vos
                               </span>
                             )}
@@ -439,7 +577,7 @@ export default function UsuariosPage() {
                             {u.nombreCompleto || 'Sin nombre'}
                           </p>
                           {esPropio && (
-                            <span className="rounded bg-primary-container/10 px-1.5 py-0.5 text-[10px] font-bold text-primary-container">
+                            <span className="rounded bg-primary-container/10 px-1.5 py-0.5 text-xs font-bold text-primary-container">
                               Vos
                             </span>
                           )}
@@ -456,16 +594,16 @@ export default function UsuariosPage() {
 
                       <div>
                         {esPendiente ? (
-                          <span className="inline-block rounded border border-[#F9CF58] bg-[#F9CF58]/25 px-2 py-0.5 font-label-sm text-[11px] font-semibold text-[#4A3800]">
+                          <span className="inline-block rounded border border-[#F9CF58] bg-[#F9CF58]/25 px-2 py-0.5 font-label-sm text-xs font-semibold text-[#4A3800]">
                             Pendiente
                           </span>
                         ) : u.activo ? (
-                          <span className="inline-flex items-center gap-1 rounded-full bg-secondary/15 px-2 py-0.5 font-label-sm text-[11px] font-semibold text-secondary">
-                            <Check size={11} /> Activo
+                          <span className="inline-flex items-center gap-1 rounded-full bg-secondary/15 px-2 py-0.5 font-label-sm text-xs font-semibold text-secondary">
+                            <Check size={12} /> Activo
                           </span>
                         ) : (
-                          <span className="inline-flex items-center gap-1 rounded-full bg-error-container/40 px-2 py-0.5 font-label-sm text-[11px] font-semibold text-error">
-                            <UserX size={11} /> Inactivo
+                          <span className="inline-flex items-center gap-1 rounded-full bg-error-container/40 px-2 py-0.5 font-label-sm text-xs font-semibold text-error">
+                            <UserX size={12} /> Inactivo
                           </span>
                         )}
                       </div>

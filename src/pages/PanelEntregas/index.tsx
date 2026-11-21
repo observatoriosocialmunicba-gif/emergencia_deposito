@@ -132,7 +132,7 @@ export default function PanelEntregasPage() {
             <Truck size={24} />
           </div>
           <div>
-            <div className="font-label-sm text-[11px] font-semibold tracking-wider text-on-surface-variant uppercase">
+            <div className="font-label-sm text-xs font-semibold tracking-wider text-on-surface-variant uppercase">
               Estado de Cuadrilla
             </div>
             <div className="mt-0.5 flex items-center gap-2">
@@ -195,7 +195,7 @@ export default function PanelEntregasPage() {
               void pedidos.refetch()
             }}
             title="Actualizar datos"
-            className="inline-flex min-h-[44px] items-center gap-1.5 rounded-lg border border-line bg-white px-3 py-2 font-label-md text-label-md text-ink shadow-xs transition-colors hover:bg-page"
+            className="inline-flex min-h-[44px] min-w-[44px] justify-center items-center gap-1.5 rounded-lg border border-line bg-white px-3 py-2 font-label-md text-label-md text-ink shadow-xs transition-colors hover:bg-page"
           >
             <RefreshCw
               size={16}
@@ -351,7 +351,7 @@ export default function PanelEntregasPage() {
                         DNI: {p.dni ?? '-'} • {p.barrio ?? '-'}
                       </span>
                     </div>
-                    <span className="inline-flex items-center rounded-full border border-[#81F47A] bg-[#81F47A]/30 px-2.5 py-0.5 text-[11px] font-bold text-[#0E470A]">
+                    <span className="inline-flex items-center rounded-full border border-[#81F47A] bg-[#81F47A]/30 px-2.5 py-0.5 text-xs font-bold text-[#0E470A]">
                       En Calle
                     </span>
                   </div>
@@ -427,7 +427,7 @@ export default function PanelEntregasPage() {
             <div className="my-4 space-y-3 rounded-lg border border-line bg-page p-4 text-xs font-mono text-ink">
               <div className="border-b border-line pb-2 text-center">
                 <p className="font-bold text-sm">MUNICIPALIDAD DE CÓRDOBA</p>
-                <p className="text-[11px] text-ink-soft">
+                <p className="text-xs text-ink-soft">
                   Secretaría de Políticas Sociales y Desarrollo Humano
                 </p>
               </div>

@@ -1,6 +1,5 @@
 import {
   BadgeCheck,
-  CircleHelp,
   CircleUser,
   ClipboardCheck,
   ClipboardList,
@@ -9,7 +8,6 @@ import {
   LogOut,
   Menu,
   Package,
-  ShieldCheck,
   Truck,
   Users,
   X,
@@ -78,13 +76,6 @@ const PRINCIPAL: Item[] = [
 
 const HERRAMIENTAS: Item[] = [
   { to: '/perfil', label: 'Perfil', icon: CircleUser },
-  { to: '/ayuda', label: 'Ayuda', icon: CircleHelp },
-  {
-    to: '/administrativo',
-    label: 'Administrativo',
-    icon: ShieldCheck,
-    soloRoles: ['Administrador'],
-  },
 ]
 
 function NavItem({ item, onNavigate }: { item: Item; onNavigate: () => void }) {
@@ -168,8 +159,8 @@ function SidebarContent({ onNavigate }: { onNavigate: () => void }) {
             <p className="truncate font-body-md-bold text-body-md-bold leading-tight text-ink">
               {usuario?.nombreCompleto ?? 'Nombre Completo'}
             </p>
-            <p className="truncate font-label-sm text-label-sm text-ink-soft">{email}</p>
-            <span className="mt-0.5 inline-block rounded bg-teal-soft px-1.5 py-0.5 font-label-sm text-[10px] font-semibold text-secondary">
+            <p className="truncate text-xs text-ink-soft">{email}</p>
+            <span className="mt-0.5 inline-block rounded bg-teal-soft px-1.5 py-0.5 text-xs font-semibold text-secondary">
               {usuario?.rol ?? 'Sin rol'}
             </span>
           </div>

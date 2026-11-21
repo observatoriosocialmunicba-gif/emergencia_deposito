@@ -1,6 +1,5 @@
-import { CircleHelp, Inbox, RefreshCw, Search } from 'lucide-react'
+import { Inbox, RefreshCw, Search } from 'lucide-react'
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
 import { ListaPedidosMovil, Paginador, TablaPedidos, TarjetaEstado } from '../../components/pedidos'
 import Spinner from '../../components/Spinner'
 import { useAuth } from '../../context/AuthContext'
@@ -42,13 +41,6 @@ export default function EstadoPedidosPage() {
         <h1 className="font-headline-lg-mobile text-headline-lg-mobile font-bold tracking-tight text-ink md:font-headline-lg md:text-headline-lg">
           Estado de Pedidos
         </h1>
-        <Link
-          to="/ayuda"
-          aria-label="Ayuda"
-          className="flex min-h-[44px] min-w-[44px] items-center justify-center rounded-full text-ink-soft transition-colors hover:bg-page hover:text-primary-container focus:outline-none focus:ring-2 focus:ring-success"
-        >
-          <CircleHelp size={26} />
-        </Link>
       </div>
       {(usuario?.rol ?? 'No Asignado') !== 'No Asignado' && (
         <button
@@ -58,7 +50,7 @@ export default function EstadoPedidosPage() {
             void pedidos.refetch()
           }}
           title="Actualizar"
-          className="inline-flex min-h-[44px] items-center gap-1.5 self-start rounded-lg border border-line bg-panel px-3 py-1.5 font-label-md text-label-md text-ink transition-colors hover:bg-page sm:self-auto"
+          className="inline-flex min-h-[44px] min-w-[44px] justify-center items-center gap-1.5 self-start rounded-lg border border-line bg-panel px-3 py-1.5 font-label-md text-label-md text-ink transition-colors hover:bg-page sm:self-auto"
         >
           <RefreshCw
             size={16}

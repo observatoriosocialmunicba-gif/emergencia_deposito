@@ -42,7 +42,7 @@ function ConteoPedidos({ resumen, cargando }: { resumen?: PersonaDni; cargando: 
         {resumen.pedidos_total}
       </span>
       {repetido && (
-        <span className="rounded border border-[#F9CF58] bg-[#F9CF58]/25 px-1.5 py-px text-[10px] font-semibold text-[#4A3800]">
+        <span className="rounded border border-[#F9CF58] bg-[#F9CF58]/25 px-1.5 py-px text-xs font-semibold text-[#4A3800]">
           DNI repetido ×{resumen.registros_mismo_dni}
         </span>
       )}
@@ -116,11 +116,11 @@ export default function HistorialPedidosPage() {
               aria-label="Miga de pan"
               className="flex items-center gap-2 font-label-md text-label-md text-on-surface-variant"
             >
-              <Link to="/estado-pedidos" className="transition-colors hover:text-primary">
+              <Link to="/estado-pedidos" className="inline-flex min-h-[44px] items-center transition-colors hover:text-primary">
                 Inicio
               </Link>
               <ChevronRight size={14} />
-              <span className="font-bold text-primary">Historial Pedidos</span>
+              <span className="inline-flex min-h-[44px] items-center font-bold text-primary">Historial Pedidos</span>
             </nav>
 
             <div className="inline-flex items-center gap-2 rounded-full border border-outline-variant/60 bg-surface-container px-3 py-1 text-xs">
@@ -313,7 +313,7 @@ export default function HistorialPedidosPage() {
                           )}
                         </div>
                         <div className="text-center">
-                          <p className="text-[10px] font-semibold uppercase text-on-surface-variant">
+                          <p className="text-xs font-semibold uppercase text-on-surface-variant">
                             Pedidos
                           </p>
                           <ConteoPedidos
@@ -345,17 +345,19 @@ export default function HistorialPedidosPage() {
                   <div className="flex items-center gap-1">
                     <button
                       type="button"
+                      aria-label="Página anterior"
                       disabled={pagina === 0}
                       onClick={() => setPagina((p) => Math.max(0, p - 1))}
-                      className="rounded-lg border border-outline-variant p-2 text-on-surface hover:bg-surface-container disabled:opacity-40"
+                      className="flex min-h-[44px] min-w-[44px] items-center justify-center rounded-lg border border-outline-variant text-on-surface hover:bg-surface-container disabled:opacity-40"
                     >
                       <ChevronLeft size={16} />
                     </button>
                     <button
                       type="button"
+                      aria-label="Página siguiente"
                       disabled={pagina + 1 >= totalPaginas}
                       onClick={() => setPagina((p) => p + 1)}
-                      className="rounded-lg border border-outline-variant p-2 text-on-surface hover:bg-surface-container disabled:opacity-40"
+                      className="flex min-h-[44px] min-w-[44px] items-center justify-center rounded-lg border border-outline-variant text-on-surface hover:bg-surface-container disabled:opacity-40"
                     >
                       <ChevronRight size={16} />
                     </button>
@@ -375,19 +377,19 @@ export default function HistorialPedidosPage() {
           {/* Top Breadcrumb & Back Action Bar */}
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-surface-container-lowest p-4 rounded-xl border border-outline-variant/40 shadow-sm">
             <nav className="flex items-center gap-2 text-on-surface-variant font-label-md text-label-md flex-wrap">
-              <Link to="/estado-pedidos" className="hover:text-primary flex items-center gap-1">
+              <Link to="/estado-pedidos" className="inline-flex min-h-[44px] items-center hover:text-primary gap-1">
                 Inicio
               </Link>
               <span className="text-outline-variant">/</span>
               <button
                 type="button"
                 onClick={() => setPersonaSeleccionada(null)}
-                className="hover:text-primary"
+                className="inline-flex min-h-[44px] items-center hover:text-primary"
               >
                 Historial Pedidos
               </button>
               <span className="text-outline-variant">/</span>
-              <span className="text-primary font-bold bg-surface-container px-2 py-0.5 rounded">
+              <span className="inline-flex min-h-[44px] items-center text-primary font-bold bg-surface-container px-2 py-0.5 rounded">
                 {personaSeleccionada.nombreCompleto || 'Persona'}
               </span>
             </nav>
@@ -428,7 +430,7 @@ export default function HistorialPedidosPage() {
                     {(resumenPorId.get(personaSeleccionada.id)?.registros_mismo_dni ?? 1) > 1 && (
                       <>
                         <span>•</span>
-                        <span className="inline-block rounded border border-[#F9CF58] bg-[#F9CF58]/25 px-2 py-0.5 text-[11px] font-semibold text-[#4A3800]">
+                        <span className="inline-block rounded border border-[#F9CF58] bg-[#F9CF58]/25 px-2 py-0.5 text-xs font-semibold text-[#4A3800]">
                           DNI repetido en {resumenPorId.get(personaSeleccionada.id)?.registros_mismo_dni}{' '}
                           registros
                         </span>
@@ -437,7 +439,7 @@ export default function HistorialPedidosPage() {
                     {ultimoPedido?.discapacidad !== undefined && (
                       <>
                         <span>•</span>
-                        <span className="inline-block px-2 py-0.5 rounded bg-surface-container-low text-[11px] font-semibold text-on-surface-variant">
+                        <span className="inline-block px-2 py-0.5 rounded bg-surface-container-low text-xs font-semibold text-on-surface-variant">
                           {ultimoPedido.discapacidad
                             ? 'Persona con Discapacidad'
                             : 'Persona sin Discapacidad'}

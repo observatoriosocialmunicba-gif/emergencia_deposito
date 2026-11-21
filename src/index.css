@@ -54,7 +54,7 @@
   --color-on-surface-variant: #454653;
   --color-inverse-surface: #26323a;
   --color-inverse-on-surface: #e6f2fd;
-  --color-outline: #767685;
+  --color-outline: #6b6b7a;
   --color-outline-variant: #c6c5d5;
 
   /* Valores que Stitch usa "a mano" en el HTML y se repiten en varias pantallas */
@@ -68,7 +68,7 @@
   --color-teal-soft: #e6faf7;
   --color-teal-ink: #0a423c;
   --color-success: #249689;
-  --color-danger: #ff5963;
+  --color-danger: #ba1a1a;
 
   --spacing-space-xs: 0.25rem;
   --spacing-space-sm: 0.5rem;
@@ -135,12 +135,12 @@
   --text-label-lg--line-height: 20px;
   --text-label-lg--letter-spacing: 0.01em;
   --text-label-lg--font-weight: 600;
-  --text-label-md: 12px;
-  --text-label-md--line-height: 16px;
+  --text-label-md: 13px;
+  --text-label-md--line-height: 18px;
   --text-label-md--letter-spacing: 0.02em;
   --text-label-md--font-weight: 600;
-  --text-label-sm: 11px;
-  --text-label-sm--line-height: 14px;
+  --text-label-sm: 12px;
+  --text-label-sm--line-height: 16px;
   --text-label-sm--letter-spacing: 0.04em;
   --text-label-sm--font-weight: 700;
 }

@@ -303,7 +303,7 @@ function PerfilContenido({
                 >
                   Correo Electrónico
                 </label>
-                <span className="inline-flex items-center gap-1 rounded bg-surface-container px-2 py-0.5 font-label-sm text-[11px] text-outline">
+                <span className="inline-flex items-center gap-1 rounded bg-surface-container px-2 py-0.5 font-label-sm text-xs font-medium text-on-surface-variant">
                   <Lock size={12} /> Solo Lectura
                 </span>
               </div>

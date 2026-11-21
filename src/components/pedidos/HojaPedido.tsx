@@ -57,7 +57,7 @@ export default function HojaPedido({
         <div className="flex items-center gap-3">
           <img src={logo} alt="" className="size-11 object-contain" />
           <div>
-            <h1 className="text-[18px] font-bold leading-none">Pedido Nº {pedido.id}</h1>
+            <h2 className="text-[18px] font-bold leading-none">Pedido Nº {pedido.id}</h2>
             <p className="mt-1 text-[10px] text-gray-700">
               Secretaría de Políticas Sociales y Desarrollo Humano
             </p>

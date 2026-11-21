@@ -6,6 +6,7 @@ import {
   Building,
   Calendar,
   CheckCircle2,
+  ChevronDown,
   Clock,
   FolderSync,
   Layers,
@@ -113,6 +114,9 @@ export default function DashboardPage() {
   const [periodo, setPeriodo] = useState<Periodo>('30d')
   const [agrupacion, setAgrupacion] = useState<Agrupacion>('semana')
   const [verTabla, setVerTabla] = useState(false)
+  const [subsecretariaAbierto, setSubsecretariaAbierto] = useState(true)
+  const [barriosAbierto, setBarriosAbierto] = useState(true)
+  const [rubrosAbierto, setRubrosAbierto] = useState(true)
 
   const kpisQuery = useKpisDashboard()
   const serieQuery = useSerieDiaria()
@@ -240,7 +244,7 @@ export default function DashboardPage() {
           {/* Chips Selector de Período */}
           <div
             aria-label="Rango de días"
-            className="inline-flex rounded-lg border border-outline-variant/60 bg-surface-container p-1"
+            className="inline-flex flex-wrap rounded-lg border border-outline-variant/60 bg-surface-container p-1"
             role="group"
           >
             {(
@@ -256,7 +260,7 @@ export default function DashboardPage() {
                 key={key}
                 type="button"
                 onClick={() => setPeriodo(key)}
-                className={`rounded-md px-3.5 py-1.5 text-xs font-semibold transition-colors ${
+                className={`flex min-h-[44px] items-center justify-center rounded-md px-3.5 py-1.5 text-xs font-semibold transition-colors ${
                   periodo === key
                     ? 'bg-primary text-on-primary shadow-sm'
                     : 'text-on-surface-variant hover:text-primary'
@@ -343,32 +347,32 @@ export default function DashboardPage() {
       {/* ========================================================================= */}
       {!cargando && !hayError && totalPedidos > 0 && (
         <div className="space-y-6">
-          {/* 2. GRID DE 8 TARJETAS DE INDICADORES (4x2 en Desktop) */}
-          <section className="grid grid-cols-1 gap-gutter-desktop sm:grid-cols-2 lg:grid-cols-4">
+          {/* 2. GRID DE 8 TARJETAS DE INDICADORES (2 en móvil, 4 en Desktop) */}
+          <section className="grid grid-cols-2 gap-3 sm:gap-gutter-desktop lg:grid-cols-4">
             {/* Card 1: Total de pedidos */}
-            <div className="flex flex-col justify-between rounded-xl border border-outline-variant bg-surface-container-lowest p-5 shadow-sm">
+            <div className="flex flex-col justify-between rounded-xl border border-outline-variant bg-surface-container-lowest p-3.5 sm:p-5 shadow-sm">
               <div className="flex items-center justify-between text-on-surface-variant">
-                <span className="font-label-md text-label-md uppercase tracking-wider text-outline">
-                  Total de Pedidos
+                <span className="font-label-md text-xs sm:text-label-md uppercase tracking-wider text-outline">
+                  Total Pedidos
                 </span>
                 <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-surface-container text-primary">
                   <Package size={20} />
                 </span>
               </div>
               <div className="mt-3">
-                <div className="font-headline-xl text-headline-xl font-bold text-primary">
+                <div className="font-headline-lg sm:font-headline-xl text-headline-lg sm:text-headline-xl font-bold text-primary">
                   {totalPedidos.toLocaleString('es-AR')}
                 </div>
-                <p className="mt-1 font-label-md text-label-md text-on-surface-variant">
+                <p className="mt-1 font-label-md text-xs sm:text-label-md text-on-surface-variant">
                   Total de pedidos registrados
                 </p>
               </div>
             </div>
 
             {/* Card 2: Pedidos últimos 30 días */}
-            <div className="flex flex-col justify-between rounded-xl border border-outline-variant bg-surface-container-lowest p-5 shadow-sm">
+            <div className="flex flex-col justify-between rounded-xl border border-outline-variant bg-surface-container-lowest p-3.5 sm:p-5 shadow-sm">
               <div className="flex items-center justify-between text-on-surface-variant">
-                <span className="font-label-md text-label-md uppercase tracking-wider text-outline">
+                <span className="font-label-md text-xs sm:text-label-md uppercase tracking-wider text-outline">
                   Últimos 30 Días
                 </span>
                 <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-surface-container text-primary">
@@ -376,22 +380,22 @@ export default function DashboardPage() {
                 </span>
               </div>
               <div className="mt-3">
-                <div className="flex items-baseline gap-2">
-                  <div className="font-headline-xl text-headline-xl font-bold text-primary">
+                <div className="flex flex-wrap items-baseline gap-2">
+                  <div className="font-headline-lg sm:font-headline-xl text-headline-lg sm:text-headline-xl font-bold text-primary">
                     {metricas30d.pedidosUlt30.toLocaleString('es-AR')}
                   </div>
                   <VariacionChip valor={metricas30d.varPedidos} neutral />
                 </div>
-                <p className="mt-1 font-label-md text-label-md text-on-surface-variant">
+                <p className="mt-1 font-label-md text-xs sm:text-label-md text-on-surface-variant">
                   vs. 30 días previos
                 </p>
               </div>
             </div>
 
             {/* Card 3: Entregas últimos 30 días */}
-            <div className="flex flex-col justify-between rounded-xl border border-outline-variant bg-surface-container-lowest p-5 shadow-sm">
+            <div className="flex flex-col justify-between rounded-xl border border-outline-variant bg-surface-container-lowest p-3.5 sm:p-5 shadow-sm">
               <div className="flex items-center justify-between text-on-surface-variant">
-                <span className="font-label-md text-label-md uppercase tracking-wider text-outline">
+                <span className="font-label-md text-xs sm:text-label-md uppercase tracking-wider text-outline">
                   Entregas 30 Días
                 </span>
                 <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-surface-container text-secondary">
@@ -399,39 +403,39 @@ export default function DashboardPage() {
                 </span>
               </div>
               <div className="mt-3">
-                <div className="flex items-baseline gap-2">
-                  <div className="font-headline-xl text-headline-xl font-bold text-primary">
+                <div className="flex flex-wrap items-baseline gap-2">
+                  <div className="font-headline-lg sm:font-headline-xl text-headline-lg sm:text-headline-xl font-bold text-primary">
                     {metricas30d.entregasUlt30.toLocaleString('es-AR')}
                   </div>
                   <VariacionChip valor={metricas30d.varEntregas} />
                 </div>
-                <p className="mt-1 font-label-md text-label-md text-on-surface-variant">
+                <p className="mt-1 font-label-md text-xs sm:text-label-md text-on-surface-variant">
                   vs. 30 días previos
                 </p>
               </div>
             </div>
 
             {/* Card 4: Pendientes de autorización */}
-            <div className="relative flex flex-col justify-between overflow-hidden rounded-xl border-2 border-[#F9CF58] bg-amber-50/20 p-5 shadow-sm">
+            <div className="relative flex flex-col justify-between overflow-hidden rounded-xl border-2 border-[#F9CF58] bg-amber-50/20 p-3.5 sm:p-5 shadow-sm">
               <div className="flex items-center justify-between text-[#4A3800]">
-                <span className="font-label-md text-label-md font-bold uppercase tracking-wider">
-                  Pendientes Autorización
+                <span className="font-label-md text-xs sm:text-label-md font-bold uppercase tracking-wider">
+                  Por Autorizar
                 </span>
                 <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#F9CF58]/40 text-[#4A3800]">
                   <AlertTriangle size={20} />
                 </span>
               </div>
               <div className="mt-2">
-                <div className="font-headline-xl text-headline-xl font-bold text-[#4A3800]">
+                <div className="font-headline-lg sm:font-headline-xl text-headline-lg sm:text-headline-xl font-bold text-[#4A3800]">
                   {pendientesAutorizacion}
                 </div>
-                <div className="mt-1 flex items-center justify-between">
-                  <span className="font-label-md text-label-md text-on-surface-variant">
+                <div className="mt-1 flex flex-wrap items-center justify-between gap-1">
+                  <span className="font-label-md text-xs sm:text-label-md text-on-surface-variant">
                     Esperan autorización
                   </span>
                   <Link
                     to="/autorizar-pedidos"
-                    className="flex items-center gap-0.5 text-xs font-bold text-primary underline hover:text-secondary"
+                    className="inline-flex min-h-[44px] items-center gap-0.5 text-xs font-bold text-primary underline hover:text-secondary"
                   >
                     Ver en Autorizar →
                   </Link>
@@ -440,38 +444,38 @@ export default function DashboardPage() {
             </div>
 
             {/* Card 5: Personas atendidas */}
-            <div className="flex flex-col justify-between rounded-xl border border-outline-variant bg-surface-container-lowest p-5 shadow-sm">
+            <div className="flex flex-col justify-between rounded-xl border border-outline-variant bg-surface-container-lowest p-3.5 sm:p-5 shadow-sm">
               <div className="flex items-center justify-between text-on-surface-variant">
-                <span className="font-label-md text-label-md uppercase tracking-wider text-outline">
-                  Personas Asistidas
+                <span className="font-label-md text-xs sm:text-label-md uppercase tracking-wider text-outline">
+                  Personas
                 </span>
                 <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-surface-container text-primary">
                   <Users size={20} />
                 </span>
               </div>
               <div className="mt-3">
-                <div className="font-headline-xl text-headline-xl font-bold text-primary">
+                <div className="font-headline-lg sm:font-headline-xl text-headline-lg sm:text-headline-xl font-bold text-primary">
                   {(kpis?.personas_atendidas ?? 0).toLocaleString('es-AR')}
                 </div>
-                <p className="mt-1 font-label-md text-label-md text-on-surface-variant">
-                  Personas distintas con pedidos
+                <p className="mt-1 font-label-md text-xs sm:text-label-md text-on-surface-variant">
+                  Personas distintas asistidas
                 </p>
               </div>
             </div>
 
             {/* Card 6: Unidades solicitadas / entregadas */}
-            <div className="flex flex-col justify-between rounded-xl border border-outline-variant bg-surface-container-lowest p-5 shadow-sm">
+            <div className="flex flex-col justify-between rounded-xl border border-outline-variant bg-surface-container-lowest p-3.5 sm:p-5 shadow-sm">
               <div className="flex items-center justify-between text-on-surface-variant">
-                <span className="font-label-md text-label-md uppercase tracking-wider text-outline">
-                  Unidades / Despacho
+                <span className="font-label-md text-xs sm:text-label-md uppercase tracking-wider text-outline">
+                  Insumos
                 </span>
                 <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-surface-container text-primary">
                   <Layers size={20} />
                 </span>
               </div>
               <div className="mt-2">
-                <div className="flex items-baseline justify-between">
-                  <span className="font-body-lg-bold text-body-lg-bold text-primary">
+                <div className="flex flex-wrap items-baseline justify-between gap-1">
+                  <span className="font-body-lg-bold text-sm sm:text-body-lg-bold text-primary">
                     {(kpis?.unidades_entregadas ?? 0).toLocaleString('es-AR')}{' '}
                     <span className="text-xs font-normal text-outline">entregadas</span>
                   </span>
@@ -487,60 +491,55 @@ export default function DashboardPage() {
                 </div>
                 <div className="mt-1 flex justify-between text-xs text-on-surface-variant">
                   <span>{porcentajeCompletado}% completado</span>
-                  <span>
-                    Faltan{' '}
-                    {Math.max(
-                      0,
-                      (kpis?.unidades_solicitadas ?? 0) - (kpis?.unidades_entregadas ?? 0),
-                    ).toLocaleString('es-AR')}
-                  </span>
                 </div>
               </div>
             </div>
 
             {/* Card 7: Días promedio hasta la entrega */}
-            <div className="flex flex-col justify-between rounded-xl border border-outline-variant bg-surface-container-lowest p-5 shadow-sm">
+            <div className="flex flex-col justify-between rounded-xl border border-outline-variant bg-surface-container-lowest p-3.5 sm:p-5 shadow-sm">
               <div className="flex items-center justify-between text-on-surface-variant">
-                <span className="font-label-md text-label-md uppercase tracking-wider text-outline">
-                  Tiempo de Entrega
+                <span className="font-label-md text-xs sm:text-label-md uppercase tracking-wider text-outline">
+                  Tiempo Entrega
                 </span>
                 <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-surface-container text-primary">
                   <Clock size={20} />
                 </span>
               </div>
               <div className="mt-3">
-                <div className="font-headline-xl text-headline-xl font-bold text-primary">
-                  {kpis?.dias_promedio_entrega != null
-                    ? `${Math.round(kpis.dias_promedio_entrega)} días`
-                    : '—'}
+                <div className="flex items-baseline gap-1">
+                  <div className="font-headline-lg sm:font-headline-xl text-headline-lg sm:text-headline-xl font-bold text-primary">
+                    {kpis?.dias_promedio_entrega != null
+                      ? `${Math.round(kpis.dias_promedio_entrega)} días`
+                      : '—'}
+                  </div>
                 </div>
-                <p className="mt-1 font-label-md text-label-md text-on-surface-variant">
-                  Promedio desde la solicitud hasta la entrega
+                <p className="mt-1 font-label-md text-xs sm:text-label-md text-on-surface-variant">
+                  Promedio de despacho
                 </p>
               </div>
             </div>
 
             {/* Card 8: Pedidos con discapacidad */}
-            <div className="flex flex-col justify-between rounded-xl border border-outline-variant bg-surface-container-lowest p-5 shadow-sm">
+            <div className="flex flex-col justify-between rounded-xl border border-outline-variant bg-surface-container-lowest p-3.5 sm:p-5 shadow-sm">
               <div className="flex items-center justify-between text-on-surface-variant">
-                <span className="font-label-md text-label-md uppercase tracking-wider text-outline">
-                  Pedidos con discapacidad
+                <span className="font-label-md text-xs sm:text-label-md uppercase tracking-wider text-outline">
+                  Discapacidad
                 </span>
                 <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-surface-container text-primary">
                   <Accessibility size={20} />
                 </span>
               </div>
               <div className="mt-3">
-                <div className="flex items-baseline gap-2">
-                  <div className="font-headline-xl text-headline-xl font-bold text-primary">
+                <div className="flex flex-wrap items-baseline gap-1.5">
+                  <div className="font-headline-lg sm:font-headline-xl text-headline-lg sm:text-headline-xl font-bold text-primary">
                     {(kpis?.pedidos_con_discapacidad ?? 0).toLocaleString('es-AR')}
                   </div>
-                  <span className="inline-flex items-center rounded border border-primary-fixed-dim bg-primary-fixed px-2 py-0.5 text-xs font-bold text-primary">
-                    {porcentajeDiscapacidad}% del total
+                  <span className="inline-flex items-center rounded border border-primary-fixed-dim bg-primary-fixed px-1.5 py-0.5 text-xs font-bold text-primary">
+                    {porcentajeDiscapacidad}%
                   </span>
                 </div>
-                <p className="mt-1 font-label-md text-label-md text-on-surface-variant">
-                  De personas con discapacidad
+                <p className="mt-1 font-label-md text-xs sm:text-label-md text-on-surface-variant">
+                  De personas asistidas
                 </p>
               </div>
             </div>
@@ -577,7 +576,7 @@ export default function DashboardPage() {
                       key={agr}
                       type="button"
                       onClick={() => setAgrupacion(agr)}
-                      className={`rounded px-3 py-1 text-xs font-semibold transition-colors ${
+                      className={`flex min-h-[44px] items-center justify-center rounded px-3 py-1 text-xs font-semibold transition-colors ${
                         agrupacion === agr
                           ? 'bg-primary text-on-primary shadow-sm'
                           : 'text-on-surface-variant hover:text-primary'
@@ -604,7 +603,7 @@ export default function DashboardPage() {
                 <button
                   type="button"
                   onClick={() => setVerTabla(!verTabla)}
-                  className="flex min-h-[40px] items-center gap-1.5 rounded-lg border border-outline-variant px-3 py-2 text-xs font-bold text-primary transition-colors hover:bg-surface-container"
+                  className="flex min-h-[44px] items-center gap-1.5 rounded-lg border border-outline-variant px-3 py-2 text-xs font-bold text-primary transition-colors hover:bg-surface-container"
                 >
                   <TableIcon size={16} />
                   <span>{verTabla ? 'Ver Gráfico' : 'Ver como tabla'}</span>
@@ -670,14 +669,14 @@ export default function DashboardPage() {
                       <CartesianGrid stroke="#CBD5E1" strokeDasharray="2 4" vertical={false} />
                       <XAxis
                         dataKey="etiqueta"
-                        tick={{ fontSize: 10, fill: '#64748B' }}
+                        tick={{ fontSize: 12, fill: '#454653' }}
                         tickLine={{ stroke: '#94A3B8' }}
                         axisLine={{ stroke: '#94A3B8' }}
                         minTickGap={16}
                       />
                       <YAxis
                         allowDecimals={false}
-                        tick={{ fontSize: 10, fill: '#64748B' }}
+                        tick={{ fontSize: 12, fill: '#454653' }}
                         tickLine={{ stroke: '#94A3B8' }}
                         axisLine={{ stroke: '#94A3B8' }}
                         width={36}
@@ -847,190 +846,244 @@ export default function DashboardPage() {
             {/* PANEL B: Pedidos por Subsecretaría */}
             <div className="flex flex-col justify-between rounded-xl border border-outline-variant bg-surface-container-lowest p-6 shadow-sm">
               <div>
-                <div className="flex items-center justify-between border-b border-surface-container pb-3">
-                  <h3 className="font-headline-sm text-headline-sm text-primary">
-                    Pedidos por Subsecretaría
-                  </h3>
-                  <Building size={20} className="text-outline" />
-                </div>
-                <p className="mb-4 mt-1 text-xs text-on-surface-variant">
-                  Dependencias gestoras y ejecutoras del despacho
-                </p>
-                <div className="space-y-3.5">
-                  {subsecretariaQuery.data?.top.map((item) => {
-                    const pct =
-                      (subsecretariaQuery.data?.total ?? 0) > 0
-                        ? Math.round((item.pedidos / subsecretariaQuery.data!.total) * 100)
-                        : 0
-                    return (
-                      <div key={item.valor}>
-                        <div className="mb-1 flex justify-between text-xs font-semibold">
-                          <span>{item.valor || 'Sin asignar'}</span>
-                          <span className="font-bold text-secondary">
-                            {pct}% ({item.pedidos})
-                          </span>
+                <button
+                  type="button"
+                  onClick={() => setSubsecretariaAbierto(!subsecretariaAbierto)}
+                  className="flex min-h-[44px] w-full items-center justify-between border-b border-surface-container pb-2 text-left"
+                >
+                  <div className="flex items-center gap-2">
+                    <Building size={20} className="text-outline" />
+                    <h3 className="font-headline-sm text-headline-sm text-primary">
+                      Pedidos por Subsecretaría
+                    </h3>
+                  </div>
+                  <ChevronDown
+                    size={20}
+                    className={`text-outline transition-transform duration-200 ${
+                      subsecretariaAbierto ? 'rotate-180' : ''
+                    }`}
+                  />
+                </button>
+                {subsecretariaAbierto && (
+                  <>
+                    <p className="mb-4 mt-2 text-xs text-on-surface-variant">
+                      Dependencias gestoras y ejecutoras del despacho
+                    </p>
+                    <div className="space-y-3.5">
+                      {subsecretariaQuery.data?.top.map((item) => {
+                        const pct =
+                          (subsecretariaQuery.data?.total ?? 0) > 0
+                            ? Math.round((item.pedidos / subsecretariaQuery.data!.total) * 100)
+                            : 0
+                        return (
+                          <div key={item.valor}>
+                            <div className="mb-1 flex justify-between text-xs font-semibold">
+                              <span>{item.valor || 'Sin asignar'}</span>
+                              <span className="font-bold text-secondary">
+                                {pct}% ({item.pedidos})
+                              </span>
+                            </div>
+                            <div className="h-3 w-full overflow-hidden rounded-full bg-surface-container">
+                              <div
+                                className="h-full rounded-full bg-secondary"
+                                style={{ width: `${pct}%` }}
+                              />
+                            </div>
+                          </div>
+                        )
+                      })}
+                      {(subsecretariaQuery.data?.otros.pedidos ?? 0) > 0 && (
+                        <div>
+                          <div className="mb-1 flex justify-between text-xs font-semibold">
+                            <span className="text-outline">Otras Áreas</span>
+                            <span className="font-bold text-outline">
+                              {Math.round(
+                                (subsecretariaQuery.data!.otros.pedidos /
+                                  subsecretariaQuery.data!.total) *
+                                  100,
+                              )}
+                              % ({subsecretariaQuery.data!.otros.pedidos})
+                            </span>
+                          </div>
+                          <div className="h-3 w-full overflow-hidden rounded-full bg-surface-container">
+                            <div
+                              className="h-full rounded-full bg-outline"
+                              style={{
+                                width: `${Math.round(
+                                  (subsecretariaQuery.data!.otros.pedidos /
+                                    subsecretariaQuery.data!.total) *
+                                    100,
+                                )}%`,
+                              }}
+                            />
+                          </div>
                         </div>
-                        <div className="h-3 w-full overflow-hidden rounded-full bg-surface-container">
-                          <div
-                            className="h-full rounded-full bg-secondary"
-                            style={{ width: `${pct}%` }}
-                          />
-                        </div>
-                      </div>
-                    )
-                  })}
-                  {(subsecretariaQuery.data?.otros.pedidos ?? 0) > 0 && (
-                    <div>
-                      <div className="mb-1 flex justify-between text-xs font-semibold">
-                        <span className="text-outline">Otras Áreas</span>
-                        <span className="font-bold text-outline">
-                          {Math.round(
-                            (subsecretariaQuery.data!.otros.pedidos /
-                              subsecretariaQuery.data!.total) *
-                              100,
-                          )}
-                          % ({subsecretariaQuery.data!.otros.pedidos})
-                        </span>
-                      </div>
-                      <div className="h-3 w-full overflow-hidden rounded-full bg-surface-container">
-                        <div
-                          className="h-full rounded-full bg-outline"
-                          style={{
-                            width: `${Math.round(
-                              (subsecretariaQuery.data!.otros.pedidos /
-                                subsecretariaQuery.data!.total) *
-                                100,
-                            )}%`,
-                          }}
-                        />
-                      </div>
+                      )}
                     </div>
-                  )}
+                  </>
+                )}
+              </div>
+              {subsecretariaAbierto && (
+                <div className="mt-4 border-t border-surface-container pt-4 text-right">
+                  <span className="text-xs text-outline">
+                    {subsecretariaQuery.data?.top.length ?? 0} dependencias asignadas
+                  </span>
                 </div>
-              </div>
-              <div className="mt-4 border-t border-surface-container pt-4 text-right">
-                <span className="text-xs text-outline">
-                  {subsecretariaQuery.data?.top.length ?? 0} dependencias asignadas
-                </span>
-              </div>
+              )}
             </div>
 
             {/* PANEL C: Top 10 Barrios */}
             <div className="flex flex-col justify-between rounded-xl border border-outline-variant bg-surface-container-lowest p-6 shadow-sm">
               <div>
-                <div className="flex items-center justify-between border-b border-surface-container pb-3">
-                  <h3 className="font-headline-sm text-headline-sm text-primary">
-                    Top 10 Barrios de Córdoba
-                  </h3>
-                  <MapPin size={20} className="text-outline" />
-                </div>
-                <p className="mb-4 mt-1 text-xs text-on-surface-variant">
-                  Zonas con mayor demanda de auxilio inmediato
-                </p>
-                <div className="space-y-2.5">
-                  {barrioQuery.data?.top.map((item, index) => {
-                    const maxBarrio = barrioQuery.data!.top[0]?.pedidos || 1
-                    const widthPct = Math.round((item.pedidos / maxBarrio) * 100)
-                    return (
-                      <div key={item.valor} className="flex items-center gap-3 text-xs">
-                        <span className="w-32 truncate font-semibold">
-                          {index + 1}. {item.valor || 'Sin barrio'}
-                        </span>
-                        <div className="h-2.5 flex-1 overflow-hidden rounded-full bg-surface-container">
-                          <div
-                            className="h-full rounded-full bg-primary-container"
-                            style={{ width: `${widthPct}%` }}
-                          />
+                <button
+                  type="button"
+                  onClick={() => setBarriosAbierto(!barriosAbierto)}
+                  className="flex min-h-[44px] w-full items-center justify-between border-b border-surface-container pb-2 text-left"
+                >
+                  <div className="flex items-center gap-2">
+                    <MapPin size={20} className="text-outline" />
+                    <h3 className="font-headline-sm text-headline-sm text-primary">
+                      Top 10 Barrios de Córdoba
+                    </h3>
+                  </div>
+                  <ChevronDown
+                    size={20}
+                    className={`text-outline transition-transform duration-200 ${
+                      barriosAbierto ? 'rotate-180' : ''
+                    }`}
+                  />
+                </button>
+                {barriosAbierto && (
+                  <>
+                    <p className="mb-4 mt-2 text-xs text-on-surface-variant">
+                      Zonas con mayor demanda de auxilio inmediato
+                    </p>
+                    <div className="space-y-2.5">
+                      {barrioQuery.data?.top.map((item, index) => {
+                        const maxBarrio = barrioQuery.data!.top[0]?.pedidos || 1
+                        const widthPct = Math.round((item.pedidos / maxBarrio) * 100)
+                        return (
+                          <div key={item.valor} className="flex items-center gap-3 text-xs">
+                            <span className="w-32 truncate font-semibold">
+                              {index + 1}. {item.valor || 'Sin barrio'}
+                            </span>
+                            <div className="h-2.5 flex-1 overflow-hidden rounded-full bg-surface-container">
+                              <div
+                                className="h-full rounded-full bg-primary-container"
+                                style={{ width: `${widthPct}%` }}
+                              />
+                            </div>
+                            <span className="w-16 text-right font-bold text-primary">
+                              {item.pedidos} ped.
+                            </span>
+                          </div>
+                        )
+                      })}
+                      {(barrioQuery.data?.otros.pedidos ?? 0) > 0 && (
+                        <div className="flex items-center gap-3 border-t border-surface-container pt-2 text-xs">
+                          <span className="w-32 truncate font-semibold text-outline">
+                            Otros Barrios
+                          </span>
+                          <div className="h-2.5 flex-1 overflow-hidden rounded-full bg-surface-container">
+                            <div className="h-full rounded-full bg-outline" style={{ width: '60%' }} />
+                          </div>
+                          <span className="w-16 text-right font-bold text-outline">
+                            {barrioQuery.data!.otros.pedidos} ped.
+                          </span>
                         </div>
-                        <span className="w-16 text-right font-bold text-primary">
-                          {item.pedidos} ped.
-                        </span>
-                      </div>
-                    )
-                  })}
-                  {(barrioQuery.data?.otros.pedidos ?? 0) > 0 && (
-                    <div className="flex items-center gap-3 border-t border-surface-container pt-2 text-xs">
-                      <span className="w-32 truncate font-semibold text-outline">
-                        Otros Barrios
-                      </span>
-                      <div className="h-2.5 flex-1 overflow-hidden rounded-full bg-surface-container">
-                        <div className="h-full rounded-full bg-outline" style={{ width: '60%' }} />
-                      </div>
-                      <span className="w-16 text-right font-bold text-outline">
-                        {barrioQuery.data!.otros.pedidos} ped.
-                      </span>
+                      )}
                     </div>
-                  )}
+                  </>
+                )}
+              </div>
+              {barriosAbierto && (
+                <div className="mt-4 border-t border-surface-container pt-4 text-right">
+                  <span className="text-xs text-outline">
+                    {(
+                      (barrioQuery.data?.top.length ?? 0) + (barrioQuery.data?.otros.valores ?? 0)
+                    ).toLocaleString('es-AR')}{' '}
+                    barrios relevados en total
+                  </span>
                 </div>
-              </div>
-              <div className="mt-4 border-t border-surface-container pt-4 text-right">
-                <span className="text-xs text-outline">
-                  {(
-                    (barrioQuery.data?.top.length ?? 0) + (barrioQuery.data?.otros.valores ?? 0)
-                  ).toLocaleString('es-AR')}{' '}
-                  barrios relevados en total
-                </span>
-              </div>
+              )}
             </div>
 
             {/* PANEL D: Productos Solicitados por Rubro */}
             <div className="flex flex-col justify-between rounded-xl border border-outline-variant bg-surface-container-lowest p-6 shadow-sm">
               <div>
-                <div className="flex items-center justify-between border-b border-surface-container pb-3">
-                  <h3 className="font-headline-sm text-headline-sm text-primary">
-                    Productos por Rubro
-                  </h3>
-                  <Package size={20} className="text-outline" />
-                </div>
-                <p className="mb-4 mt-1 text-xs text-on-surface-variant">
-                  Comparativa de unidades solicitadas vs. despachadas
-                </p>
-                <div className="space-y-4">
-                  {rubrosQuery.data?.map((rubro) => {
-                    const pct =
-                      rubro.unidades > 0
-                        ? Math.round((rubro.unidades_entregadas / rubro.unidades) * 100)
-                        : 0
-                    return (
-                      <div key={rubro.rubro}>
-                        <div className="mb-1 flex items-center justify-between text-xs">
-                          <span className="font-bold text-on-surface">
-                            {rubro.rubro || 'Sin rubro'}
-                          </span>
-                          <span className="text-xs text-on-surface-variant">
-                            <strong className="text-secondary">
-                              {rubro.unidades_entregadas.toLocaleString('es-AR')}
-                            </strong>{' '}
-                            de {rubro.unidades.toLocaleString('es-AR')} un. ({pct}%)
-                          </span>
-                        </div>
-                        <div className="flex h-3.5 w-full overflow-hidden rounded-full bg-surface-container">
-                          <div
-                            className="h-full rounded-l-full bg-secondary"
-                            style={{ width: `${Math.min(100, pct)}%` }}
-                            title="Entregado"
-                          />
-                          <div
-                            className="h-full bg-surface-variant"
-                            style={{ width: `${Math.max(0, 100 - pct)}%` }}
-                            title="Pendiente"
-                          />
-                        </div>
-                      </div>
-                    )
-                  })}
-                </div>
+                <button
+                  type="button"
+                  onClick={() => setRubrosAbierto(!rubrosAbierto)}
+                  className="flex min-h-[44px] w-full items-center justify-between border-b border-surface-container pb-2 text-left"
+                >
+                  <div className="flex items-center gap-2">
+                    <Package size={20} className="text-outline" />
+                    <h3 className="font-headline-sm text-headline-sm text-primary">
+                      Productos por Rubro
+                    </h3>
+                  </div>
+                  <ChevronDown
+                    size={20}
+                    className={`text-outline transition-transform duration-200 ${
+                      rubrosAbierto ? 'rotate-180' : ''
+                    }`}
+                  />
+                </button>
+                {rubrosAbierto && (
+                  <>
+                    <p className="mb-4 mt-2 text-xs text-on-surface-variant">
+                      Comparativa de unidades solicitadas vs. despachadas
+                    </p>
+                    <div className="space-y-4">
+                      {rubrosQuery.data?.map((rubro) => {
+                        const pct =
+                          rubro.unidades > 0
+                            ? Math.round((rubro.unidades_entregadas / rubro.unidades) * 100)
+                            : 0
+                        return (
+                          <div key={rubro.rubro}>
+                            <div className="mb-1 flex items-center justify-between text-xs">
+                              <span className="font-bold text-on-surface">
+                                {rubro.rubro || 'Sin rubro'}
+                              </span>
+                              <span className="text-xs text-on-surface-variant">
+                                <strong className="text-secondary">
+                                  {rubro.unidades_entregadas.toLocaleString('es-AR')}
+                                </strong>{' '}
+                                de {rubro.unidades.toLocaleString('es-AR')} un. ({pct}%)
+                              </span>
+                            </div>
+                            <div className="flex h-3.5 w-full overflow-hidden rounded-full bg-surface-container">
+                              <div
+                                className="h-full rounded-l-full bg-secondary"
+                                style={{ width: `${Math.min(100, pct)}%` }}
+                                title="Entregado"
+                              />
+                              <div
+                                className="h-full bg-surface-variant"
+                                style={{ width: `${Math.max(0, 100 - pct)}%` }}
+                                title="Pendiente"
+                              />
+                            </div>
+                          </div>
+                        )
+                      })}
+                    </div>
+                  </>
+                )}
               </div>
-              <div className="mt-4 flex items-center justify-end gap-4 border-t border-surface-container pt-4 text-xs">
-                <div className="flex items-center gap-1.5">
-                  <span className="h-3 w-3 rounded-full bg-secondary" />
-                  <span className="text-on-surface-variant">Unidades Entregadas</span>
+              {rubrosAbierto && (
+                <div className="mt-4 flex items-center justify-end gap-4 border-t border-surface-container pt-4 text-xs">
+                  <div className="flex items-center gap-1.5">
+                    <span className="h-3 w-3 rounded-full bg-secondary" />
+                    <span className="text-on-surface-variant">Unidades Entregadas</span>
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    <span className="h-3 w-3 rounded-full bg-surface-variant" />
+                    <span className="text-on-surface-variant">Pendientes</span>
+                  </div>
                 </div>
-                <div className="flex items-center gap-1.5">
-                  <span className="h-3 w-3 rounded-full bg-surface-variant" />
-                  <span className="text-on-surface-variant">Pendientes</span>
-                </div>
-              </div>
+              )}
             </div>
           </section>
         </div>

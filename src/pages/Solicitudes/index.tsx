@@ -123,7 +123,7 @@ export default function SolicitudesPage() {
                 <Layers size={20} />
               </div>
               <div>
-                <div className="font-label-sm text-[11px] font-semibold text-on-surface-variant">
+                <div className="font-label-sm text-xs font-semibold text-on-surface-variant">
                   Total de Solicitudes
                 </div>
                 <div className="font-headline-sm text-headline-sm font-bold text-primary">
@@ -140,7 +140,7 @@ export default function SolicitudesPage() {
                 void pedidos.refetch()
               }}
               title="Actualizar datos"
-              className="inline-flex min-h-[44px] items-center gap-1.5 rounded-xl border border-line bg-white px-3 py-2 font-label-md text-label-md text-ink shadow-xs transition-colors hover:bg-page"
+              className="inline-flex min-h-[44px] min-w-[44px] justify-center items-center gap-1.5 rounded-xl border border-line bg-white px-3 py-2 font-label-md text-label-md text-ink shadow-xs transition-colors hover:bg-page"
             >
               <RefreshCw
                 size={16}
@@ -194,7 +194,7 @@ export default function SolicitudesPage() {
                   {conteos.isLoading ? '...' : cantidad}
                 </div>
                 <span
-                  className="mt-1 self-start rounded px-1.5 py-0.5 font-label-sm text-[11px] font-semibold"
+                  className="mt-1 self-start rounded px-1.5 py-0.5 font-label-sm text-xs font-semibold"
                   style={{
                     color: paleta.texto,
                     backgroundColor: paleta.fondo,

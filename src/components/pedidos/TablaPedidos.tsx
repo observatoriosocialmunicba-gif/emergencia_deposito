@@ -101,7 +101,7 @@ export default function TablaPedidos({
                 )}
                 <td className="px-4 py-3.5">
                   <div className="font-medium">{p.barrio ?? '-'}</div>
-                  {p.direccion && <span className="block text-xs text-ink-soft">{p.direccion}</span>}
+                  {p.direccion && <span className="block text-sm text-ink-soft">{p.direccion}</span>}
                 </td>
                 <td className="px-4 py-3.5">
                   {p.procedencia ? (
@@ -113,9 +113,9 @@ export default function TablaPedidos({
                   )}
                 </td>
                 <td className="max-w-xs px-4 py-3.5">
-                  <p className="line-clamp-2 text-xs">{p.observaciones || '-'}</p>
+                  <p className="line-clamp-2 text-sm">{p.observaciones || '-'}</p>
                 </td>
-                <td className="whitespace-nowrap px-4 py-3.5 text-center text-xs text-ink-soft">
+                <td className="whitespace-nowrap px-4 py-3.5 text-center text-sm text-ink-soft">
                   {p.ultModificacion ?? '-'}
                 </td>
                 <td className="whitespace-nowrap px-4 py-3.5 text-center">

@@ -539,13 +539,13 @@ export default function NuevaSolicitudPage() {
       <div className="flex flex-wrap items-center justify-between gap-4">
         <nav
           aria-label="Migas de pan"
-          className="flex items-center gap-2 font-label-md text-label-md text-on-surface-variant"
+          className="flex flex-wrap items-center gap-2 font-label-md text-label-md text-on-surface-variant"
         >
-          <Link to="/estado-pedidos" className="transition-colors hover:text-primary-container">
+          <Link to="/estado-pedidos" className="inline-flex min-h-[44px] items-center transition-colors hover:text-primary-container">
             Inicio
           </Link>
           <ChevronRight size={14} />
-          <Link to="/solicitudes" className="transition-colors hover:text-primary-container">
+          <Link to="/solicitudes" className="inline-flex min-h-[44px] items-center transition-colors hover:text-primary-container">
             Solicitudes
           </Link>
           <ChevronRight size={14} />
@@ -553,15 +553,15 @@ export default function NuevaSolicitudPage() {
             <>
               <Link
                 to={`/ver-pedido/${idPedido}`}
-                className="transition-colors hover:text-primary-container"
+                className="inline-flex min-h-[44px] items-center transition-colors hover:text-primary-container"
               >
                 Solicitud #{idPedido}
               </Link>
               <ChevronRight size={14} />
-              <span className="font-body-md-bold text-primary">Editar</span>
+              <span className="inline-flex min-h-[44px] items-center font-body-md-bold text-primary">Editar</span>
             </>
           ) : (
-            <span className="font-body-md-bold text-primary">Nueva Solicitud</span>
+            <span className="inline-flex min-h-[44px] items-center font-body-md-bold text-primary">Nueva Solicitud</span>
           )}
         </nav>
         <Link
@@ -575,7 +575,7 @@ export default function NuevaSolicitudPage() {
 
       {/* 2. Título Principal */}
       <div className="flex flex-col gap-1">
-        <h1 className="font-headline-xl text-headline-xl font-bold tracking-tight text-primary">
+        <h1 className="font-headline-xl-mobile text-headline-xl-mobile font-bold tracking-tight text-primary md:font-headline-xl md:text-headline-xl">
           {esEdicion ? `Editar Solicitud #${idPedido}` : 'Nueva Solicitud de Emergencia'}
         </h1>
         {esEdicion && (
@@ -591,7 +591,75 @@ export default function NuevaSolicitudPage() {
         aria-label="Progreso del trámite"
         className="rounded-xl border border-outline-variant/60 bg-surface-container-lowest p-4 shadow-sm"
       >
-        <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
+        {/* Vista Móvil: Barra Compacta */}
+        <div className="flex flex-col gap-2 md:hidden">
+          <div className="flex items-center justify-between text-xs">
+            <span className="font-bold uppercase tracking-wider text-secondary">
+              Paso {paso} de 3
+            </span>
+            <span className="font-bold text-on-surface">
+              {paso === 1
+                ? '1. Destinatario'
+                : paso === 2
+                  ? '2. Pedido y Ubicación'
+                  : '3. Artículos e Insumos'}
+            </span>
+          </div>
+          {/* Barra de progreso visual */}
+          <div className="h-2 w-full overflow-hidden rounded-full bg-surface-container">
+            <div
+              className="h-full rounded-full bg-secondary transition-all duration-300"
+              style={{ width: `${(paso / 3) * 100}%` }}
+            />
+          </div>
+          {/* Navegación rápida entre pasos habilitados */}
+          <div className="flex items-center justify-between pt-1 text-xs">
+            <button
+              type="button"
+              onClick={() => setPaso(1)}
+              className={`flex min-h-[44px] items-center font-semibold ${
+                paso === 1 ? 'font-bold text-primary underline' : 'text-on-surface-variant hover:text-primary'
+              }`}
+            >
+              1. Destinatario
+            </button>
+            <button
+              type="button"
+              disabled={!personaSeleccionada}
+              onClick={() => {
+                if (personaSeleccionada) setPaso(2)
+              }}
+              className={`flex min-h-[44px] items-center font-semibold ${
+                paso === 2
+                  ? 'font-bold text-primary underline'
+                  : personaSeleccionada
+                    ? 'text-on-surface-variant hover:text-primary'
+                    : 'cursor-not-allowed text-outline/40'
+              }`}
+            >
+              2. Pedido
+            </button>
+            <button
+              type="button"
+              disabled={!(personaSeleccionada && barrio && direccion && procedencia)}
+              onClick={() => {
+                if (personaSeleccionada && barrio && direccion && procedencia) setPaso(3)
+              }}
+              className={`flex min-h-[44px] items-center font-semibold ${
+                paso === 3
+                  ? 'font-bold text-primary underline'
+                  : personaSeleccionada && barrio && direccion && procedencia
+                    ? 'text-on-surface-variant hover:text-primary'
+                    : 'cursor-not-allowed text-outline/40'
+              }`}
+            >
+              3. Artículos
+            </button>
+          </div>
+        </div>
+
+        {/* Vista Escritorio: 3 Tarjetas */}
+        <div className="hidden md:grid md:grid-cols-3 gap-3">
           {/* Paso 1 */}
           <div
             onClick={() => setPaso(1)}
@@ -631,7 +699,7 @@ export default function NuevaSolicitudPage() {
               paso === 2
                 ? 'border-2 border-secondary bg-surface-container-low shadow-xs'
                 : 'border border-outline-variant/40 bg-surface-container-lowest'
-            } ${personaSeleccionada ? 'cursor-pointer hover:bg-surface-container-low/50' : 'opacity-60'}`}
+            } ${personaSeleccionada ? 'cursor-pointer hover:bg-surface-container-low/50' : ''}`}
           >
             <div
               className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full font-bold ${
@@ -645,7 +713,11 @@ export default function NuevaSolicitudPage() {
               {paso === 3 ? <Check size={16} /> : '2'}
             </div>
             <div className="flex flex-col min-w-0">
-              <span className="font-label-sm text-label-sm font-bold uppercase tracking-wider text-secondary">
+              <span
+                className={`font-label-sm text-label-sm font-bold uppercase tracking-wider ${
+                  paso >= 2 ? 'text-secondary' : 'text-on-surface-variant'
+                }`}
+              >
                 Paso 2
               </span>
               <span className="truncate font-body-md-bold text-body-md-bold text-on-surface">
@@ -666,7 +738,7 @@ export default function NuevaSolicitudPage() {
             } ${
               personaSeleccionada && barrio && direccion && procedencia
                 ? 'cursor-pointer hover:bg-surface-container-low/50'
-                : 'opacity-60'
+                : ''
             }`}
           >
             <div
@@ -679,7 +751,11 @@ export default function NuevaSolicitudPage() {
               3
             </div>
             <div className="flex flex-col min-w-0">
-              <span className="font-label-sm text-label-sm font-bold uppercase tracking-wider text-secondary">
+              <span
+                className={`font-label-sm text-label-sm font-bold uppercase tracking-wider ${
+                  paso === 3 ? 'text-secondary' : 'text-on-surface-variant'
+                }`}
+              >
                 Paso 3
               </span>
               <span className="truncate font-body-md-bold text-body-md-bold text-on-surface">
@@ -715,7 +791,7 @@ export default function NuevaSolicitudPage() {
                 className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-lg bg-primary-container px-5 py-2.5 font-label-lg text-label-lg font-bold text-white shadow-xs transition-all hover:bg-primary-container/90 active:scale-[0.98]"
               >
                 <UserPlus size={18} />
-                <span>+ Nueva Persona</span>
+                <span>Nueva Persona</span>
               </button>
             </div>
 
@@ -733,7 +809,7 @@ export default function NuevaSolicitudPage() {
                     setBusquedaPersona(e.target.value)
                     setPaginaPersonas(0)
                   }}
-                  placeholder="Buscar persona por DNI, Nombre o Teléfono..."
+                  placeholder="Buscar por DNI, nombre o teléfono"
                   className="min-h-[46px] w-full rounded-lg border border-field bg-white pl-10 pr-4 font-body-md text-body-md text-on-surface focus:border-secondary focus:outline-none focus:ring-2 focus:ring-secondary/20"
                 />
               </div>
@@ -880,19 +956,21 @@ export default function NuevaSolicitudPage() {
                     <div className="flex items-center gap-1">
                       <button
                         type="button"
+                        aria-label="Página anterior"
                         disabled={paginaPersonas === 0}
                         onClick={() => setPaginaPersonas((p) => Math.max(0, p - 1))}
-                        className="rounded-lg border border-outline-variant p-2 text-on-surface hover:bg-surface-container disabled:opacity-40"
+                        className="flex min-h-[44px] min-w-[44px] items-center justify-center rounded-lg border border-outline-variant text-on-surface hover:bg-surface-container disabled:opacity-40"
                       >
                         <ChevronLeft size={16} />
                       </button>
                       <button
                         type="button"
+                        aria-label="Página siguiente"
                         disabled={
                           (paginaPersonas + 1) * 5 >= (personasQuery.data?.total ?? 0)
                         }
                         onClick={() => setPaginaPersonas((p) => p + 1)}
-                        className="rounded-lg border border-outline-variant p-2 text-on-surface hover:bg-surface-container disabled:opacity-40"
+                        className="flex min-h-[44px] min-w-[44px] items-center justify-center rounded-lg border border-outline-variant text-on-surface hover:bg-surface-container disabled:opacity-40"
                       >
                         <ChevronRight size={16} />
                       </button>
@@ -928,7 +1006,7 @@ export default function NuevaSolicitudPage() {
             <button
               type="button"
               onClick={() => setPaso(1)}
-              className="font-label-md text-label-md font-bold text-secondary hover:underline"
+              className="inline-flex min-h-[44px] items-center px-2 py-1 font-label-md text-label-md font-bold text-secondary hover:underline"
             >
               Cambiar Persona
             </button>
@@ -1158,7 +1236,7 @@ export default function NuevaSolicitudPage() {
                       Subsecretaría Demandante <span className="text-error">*</span>
                     </label>
                     {esEdicion && (
-                      <span className="font-label-sm text-[11px] text-ink-soft">
+                      <span className="font-label-sm text-xs text-ink-soft">
                         (No modificable en edición)
                       </span>
                     )}

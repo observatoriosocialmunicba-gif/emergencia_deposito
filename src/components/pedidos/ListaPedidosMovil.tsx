@@ -29,14 +29,14 @@ export default function ListaPedidosMovil({ filas }: { filas: Pedido[] }) {
                 <h3 className="mt-1.5 font-body-lg-bold text-body-lg-bold text-ink">
                   {p.nombreCompleto ?? '-'}
                 </h3>
-                <p className="font-mono text-xs text-ink-soft">DNI: {p.dni ?? '-'}</p>
+                <p className="font-mono text-sm text-ink-soft">DNI: {p.dni ?? '-'}</p>
               </div>
-              <span className="shrink-0 rounded bg-page px-2 py-1 text-xs font-medium text-ink-soft">
+              <span className="shrink-0 rounded bg-page px-2 py-1 text-sm font-medium text-ink-soft">
                 {formatFecha(p.fecha)}
               </span>
             </div>
 
-            <div className="space-y-1 rounded-lg border border-line bg-panel p-2.5 text-xs text-ink">
+            <div className="space-y-1 rounded-lg border border-line bg-panel p-2.5 text-sm text-ink">
               <p>
                 <strong className="text-primary-container">Ubicación:</strong>{' '}
                 {[p.barrio, p.direccion].filter(Boolean).join(' — ') || '-'}
