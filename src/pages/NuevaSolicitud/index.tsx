@@ -27,13 +27,14 @@ import {
   Utensils,
   X,
 } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import type { FormEvent } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import Spinner from '../../components/Spinner'
 import { useAuth } from '../../context/AuthContext'
 import { useAreas } from '../../hooks/useAreas'
 import { useBarrios } from '../../hooks/useBarrios'
+import { useOpciones } from '../../hooks/useOpciones'
 import {
   useActualizarPedido,
   useCrearPedido,
@@ -47,19 +48,8 @@ import {
 import { useProductos } from '../../hooks/useProductos'
 import { useDebounce } from '../../hooks/useTiempo'
 import { formatFecha, hoyISO } from '../../lib/estados'
-import type { Barrio, Persona } from '../../lib/types'
-
-const OPCIONES_PROCEDENCIA = [
-  'Redes Sociales',
-  'Copa de leche / Comedores',
-  'Particulares',
-  'Referentes Barriales',
-  'Pedido de TS',
-  'Privada Raúl',
-  'Servidores',
-  'Cooperativas',
-  'Otras',
-]
+import type { Opcion, Persona } from '../../lib/types'
+import BarrioCombobox from '../../components/ui/BarrioCombobox'
 
 interface ArticuloItem {
   id?: number
@@ -147,6 +137,42 @@ export default function NuevaSolicitudPage() {
   const barriosQuery = useBarrios()
   const productosQuery = useProductos()
   const areasQuery = useAreas()
+  const opcionesProcQuery = useOpciones('procedencia')
+  const opcionesGeneroQuery = useOpciones('genero')
+
+  const listaProcedencias = useMemo<Opcion[]>(() => {
+    const activas = opcionesProcQuery.data ?? []
+    if (procedencia && !activas.some((op) => op.valor === procedencia)) {
+      return [
+        {
+          id: -1,
+          categoria: 'procedencia' as const,
+          valor: procedencia,
+          activa: false,
+          orden: -1,
+        },
+        ...activas,
+      ]
+    }
+    return activas
+  }, [opcionesProcQuery.data, procedencia])
+
+  const listaGeneros = useMemo<Opcion[]>(() => {
+    const activas = opcionesGeneroQuery.data ?? []
+    if (formGeneroPersona && !activas.some((op) => op.valor === formGeneroPersona)) {
+      return [
+        {
+          id: -1,
+          categoria: 'genero' as const,
+          valor: formGeneroPersona,
+          activa: false,
+          orden: -1,
+        },
+        ...activas,
+      ]
+    }
+    return activas
+  }, [opcionesGeneroQuery.data, formGeneroPersona])
 
   const crearPersonaMutation = useCrearPersona()
   const actualizarPersonaMutation = useActualizarPersona()
@@ -1132,20 +1158,13 @@ export default function NuevaSolicitudPage() {
                   <label htmlFor="barrio_select" className="block font-body-md-bold text-xs text-on-surface">
                     Barrio <span className="text-error">*</span>
                   </label>
-                  <select
+                  <BarrioCombobox
                     id="barrio_select"
-                    required
                     value={barrio}
-                    onChange={(e) => handleCambioBarrio(e.target.value)}
-                    className="min-h-[46px] w-full rounded-lg border border-field bg-white px-3.5 font-body-md text-sm text-on-surface focus:border-secondary focus:outline-none focus:ring-2 focus:ring-secondary/20"
-                  >
-                    <option value="">Seleccione un barrio...</option>
-                    {barriosQuery.data?.map((b: Barrio) => (
-                      <option key={b.id} value={b.NombreBarrio ?? ''}>
-                        {b.NombreBarrio}
-                      </option>
-                    ))}
-                  </select>
+                    onChange={handleCambioBarrio}
+                    barrios={barriosQuery.data ?? []}
+                    required
+                  />
                 </div>
                 <div className="space-y-1.5">
                   <label htmlFor="direccion_input" className="block font-body-md-bold text-xs text-on-surface">
@@ -1222,9 +1241,9 @@ export default function NuevaSolicitudPage() {
                     className="min-h-[46px] w-full rounded-lg border border-field bg-white px-3.5 font-body-md text-sm text-on-surface focus:border-secondary focus:outline-none focus:ring-2 focus:ring-secondary/20"
                   >
                     <option value="">Seleccione procedencia...</option>
-                    {OPCIONES_PROCEDENCIA.map((op) => (
-                      <option key={op} value={op}>
-                        {op}
+                    {listaProcedencias.map((op) => (
+                      <option key={op.valor} value={op.valor}>
+                        {op.valor}{!op.activa ? ' (Inactiva)' : ''}
                       </option>
                     ))}
                   </select>
@@ -1629,14 +1648,19 @@ export default function NuevaSolicitudPage() {
                 <label htmlFor="pGen" className="block font-body-md-bold text-xs text-ink">
                   Género
                 </label>
-                <input
+                <select
                   id="pGen"
-                  type="text"
                   value={formGeneroPersona}
                   onChange={(e) => setFormGeneroPersona(e.target.value)}
-                  placeholder="Ej: Femenino, Masculino, Otro"
                   className="min-h-[46px] w-full rounded-lg border border-field bg-white px-3 font-body-md text-sm text-ink focus:border-secondary focus:outline-none focus:ring-2 focus:ring-secondary/20"
-                />
+                >
+                  <option value="">Sin especificar</option>
+                  {listaGeneros.map((op) => (
+                    <option key={op.valor} value={op.valor}>
+                      {op.valor}{!op.activa ? ' (Inactiva)' : ''}
+                    </option>
+                  ))}
+                </select>
               </div>
 
               <div className="flex items-center justify-end gap-2 border-t border-page pt-4">

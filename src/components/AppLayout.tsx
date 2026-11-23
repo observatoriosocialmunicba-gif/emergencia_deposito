@@ -9,6 +9,7 @@ import {
   LogOut,
   Menu,
   Package,
+  SlidersHorizontal,
   Truck,
   Users,
   X,
@@ -77,6 +78,12 @@ const PRINCIPAL: Item[] = [
     to: '/areas',
     label: 'Áreas',
     icon: Building2,
+    soloRoles: ['Administrador'],
+  },
+  {
+    to: '/opciones',
+    label: 'Opciones',
+    icon: SlidersHorizontal,
     soloRoles: ['Administrador'],
   },
 ]

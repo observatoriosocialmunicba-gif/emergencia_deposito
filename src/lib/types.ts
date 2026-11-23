@@ -19,6 +19,16 @@ export interface AreaConConteo extends Area {
   solicitantesActivosCount: number
 }
 
+export type CategoriaOpcion = 'genero' | 'procedencia'
+
+export interface Opcion {
+  id: number
+  categoria: CategoriaOpcion
+  valor: string
+  activa: boolean
+  orden: number
+}
+
 export interface Usuario {
   id: string
   nombreCompleto: string | null
