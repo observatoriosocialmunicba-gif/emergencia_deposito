@@ -345,7 +345,7 @@ export default function SolicitudesPage() {
           </div>
         ) : (
           <div className={pedidos.isPlaceholderData ? 'opacity-60 transition-opacity' : undefined}>
-            <TablaPedidos filas={filas} mostrarEstado={estado === 'todos'} />
+            <TablaPedidos filas={filas} mostrarEstado />
             <ListaPedidosMovil filas={filas} />
             <div className="max-lg:mt-3 max-lg:overflow-hidden max-lg:rounded-xl max-lg:border max-lg:border-line">
               <Paginador

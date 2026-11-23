@@ -13,6 +13,12 @@ export interface Area {
   activa: boolean
 }
 
+export interface AreaConConteo extends Area {
+  usuariosCount: number
+  pedidosCount: number
+  solicitantesActivosCount: number
+}
+
 export interface Usuario {
   id: string
   nombreCompleto: string | null

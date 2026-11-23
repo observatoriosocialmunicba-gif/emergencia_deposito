@@ -19,6 +19,7 @@ import PlaceholderPage from './pages/PlaceholderPage'
 import RecuperarPasswordPage from './pages/RecuperarPassword'
 import SolicitudesPage from './pages/Solicitudes'
 import UsuariosPage from './pages/Usuarios'
+import AreasPage from './pages/Areas'
 import VerPedidoPage from './pages/VerPedido'
 
 const queryClient = new QueryClient({
@@ -91,6 +92,7 @@ export default function App() {
                 <Route path="/estado-pedidos" element={<EstadoPedidosPage />} />
                 <Route path="/ver-pedido/:id" element={<VerPedidoPage />} />
                 <Route path="/usuarios" element={<UsuariosPage />} />
+                <Route path="/areas" element={<AreasPage />} />
                 <Route path="/perfil" element={<PerfilPage />} />
                 {PENDIENTES.map(([path, title]) => (
                   <Route

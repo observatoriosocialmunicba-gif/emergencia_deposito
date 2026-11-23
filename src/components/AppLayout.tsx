@@ -1,5 +1,6 @@
 import {
   BadgeCheck,
+  Building2,
   CircleUser,
   ClipboardCheck,
   ClipboardList,
@@ -70,6 +71,12 @@ const PRINCIPAL: Item[] = [
     to: '/usuarios',
     label: 'Usuarios',
     icon: Users,
+    soloRoles: ['Administrador'],
+  },
+  {
+    to: '/areas',
+    label: 'Áreas',
+    icon: Building2,
     soloRoles: ['Administrador'],
   },
 ]

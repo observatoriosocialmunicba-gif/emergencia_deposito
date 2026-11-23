@@ -2,6 +2,7 @@ import { Eye } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { formatFecha, paletaEstado } from '../../lib/estados'
 import type { Pedido } from '../../lib/types'
+import ChipEstado from './ChipEstado'
 
 const COLUMNAS = [
   'Fecha',
@@ -74,7 +75,10 @@ export default function TablaPedidos({
                 key={p.id}
                 className={`transition-colors hover:bg-page ${i % 2 === 0 ? 'bg-white' : 'bg-panel'}`}
               >
-                <td className="whitespace-nowrap px-4 py-3.5 font-body-md-bold text-body-md-bold">
+                <td
+                  className="whitespace-nowrap border-l-4 px-4 py-3.5 font-body-md-bold text-body-md-bold"
+                  style={{ borderLeftColor: paleta.punto }}
+                >
                   {formatFecha(p.fecha)}
                 </td>
                 <td className="px-4 py-3.5 font-body-md-bold text-body-md-bold">
@@ -83,20 +87,7 @@ export default function TablaPedidos({
                 <td className="whitespace-nowrap px-4 py-3.5 font-mono text-sm">{p.dni ?? '-'}</td>
                 {mostrarEstado && (
                   <td className="whitespace-nowrap px-4 py-3.5">
-                    <span
-                      className="inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 font-label-sm text-label-sm"
-                      style={{
-                        color: paleta.texto,
-                        backgroundColor: paleta.fondo,
-                        borderColor: paleta.borde,
-                      }}
-                    >
-                      <span
-                        className="size-1.5 rounded-full"
-                        style={{ backgroundColor: paleta.punto }}
-                      />
-                      {p.estado ?? '-'}
-                    </span>
+                    <ChipEstado estado={p.estado} />
                   </td>
                 )}
                 <td className="px-4 py-3.5">

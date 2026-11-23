@@ -1,5 +1,6 @@
 import { formatFecha, paletaEstado } from '../../lib/estados'
 import type { Pedido } from '../../lib/types'
+import ChipEstado from './ChipEstado'
 import { BotonVerPedido } from './TablaPedidos'
 
 /** Tarjetas para celular y tablet (debajo del breakpoint lg). */
@@ -13,19 +14,14 @@ export default function ListaPedidosMovil({ filas }: { filas: Pedido[] }) {
             ? `Asignado a ${p.nombreVehiculo}`
             : (p.estado ?? '-')
         return (
-          <li key={p.id} className="space-y-3 rounded-xl border border-line bg-white p-4 shadow-sm">
+          <li
+            key={p.id}
+            className="space-y-3 rounded-xl border border-l-[6px] border-line bg-white p-4 shadow-sm"
+            style={{ borderLeftColor: paleta.punto }}
+          >
             <div className="flex items-start justify-between gap-2">
               <div className="min-w-0">
-                <span
-                  className="inline-block rounded border px-2 py-0.5 font-label-sm text-label-sm"
-                  style={{
-                    color: paleta.texto,
-                    backgroundColor: paleta.fondo,
-                    borderColor: paleta.borde,
-                  }}
-                >
-                  {etiqueta}
-                </span>
+                <ChipEstado estado={p.estado} etiqueta={etiqueta} />
                 <h3 className="mt-1.5 font-body-lg-bold text-body-lg-bold text-ink">
                   {p.nombreCompleto ?? '-'}
                 </h3>
