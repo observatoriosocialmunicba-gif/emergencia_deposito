@@ -77,6 +77,7 @@ export interface Barrio {
   NombreBarrio: string | null
   Long: string | null
   Lat: string | null
+  activo?: boolean | null
 }
 
 export interface Producto {

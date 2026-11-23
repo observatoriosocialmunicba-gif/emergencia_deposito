@@ -1,6 +1,5 @@
 import {
   BadgeCheck,
-  Building2,
   CircleUser,
   ClipboardCheck,
   ClipboardList,
@@ -9,7 +8,7 @@ import {
   LogOut,
   Menu,
   Package,
-  SlidersHorizontal,
+  Settings,
   Truck,
   Users,
   X,
@@ -75,15 +74,9 @@ const PRINCIPAL: Item[] = [
     soloRoles: ['Administrador'],
   },
   {
-    to: '/areas',
-    label: 'Áreas',
-    icon: Building2,
-    soloRoles: ['Administrador'],
-  },
-  {
-    to: '/opciones',
-    label: 'Opciones',
-    icon: SlidersHorizontal,
+    to: '/configuracion',
+    label: 'Configuración',
+    icon: Settings,
     soloRoles: ['Administrador'],
   },
 ]

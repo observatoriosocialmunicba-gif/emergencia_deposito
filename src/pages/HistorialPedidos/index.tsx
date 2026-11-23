@@ -116,7 +116,7 @@ export default function HistorialPedidosPage() {
               aria-label="Miga de pan"
               className="flex items-center gap-2 font-label-md text-label-md text-on-surface-variant"
             >
-              <Link to="/estado-pedidos" className="inline-flex min-h-[44px] items-center transition-colors hover:text-primary">
+              <Link to="/estado-pedidos" className="inline-flex min-h-[44px] min-w-[44px] items-center transition-colors hover:text-primary">
                 Inicio
               </Link>
               <ChevronRight size={14} />
@@ -377,7 +377,7 @@ export default function HistorialPedidosPage() {
           {/* Top Breadcrumb & Back Action Bar */}
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-surface-container-lowest p-4 rounded-xl border border-outline-variant/40 shadow-sm">
             <nav className="flex items-center gap-2 text-on-surface-variant font-label-md text-label-md flex-wrap">
-              <Link to="/estado-pedidos" className="inline-flex min-h-[44px] items-center hover:text-primary gap-1">
+              <Link to="/estado-pedidos" className="inline-flex min-h-[44px] min-w-[44px] items-center hover:text-primary gap-1">
                 Inicio
               </Link>
               <span className="text-outline-variant">/</span>

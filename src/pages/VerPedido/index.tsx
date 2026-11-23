@@ -39,6 +39,7 @@ import {
   useRechazarPedido,
   useReintentarEntrega,
 } from '../../hooks/usePedidos'
+import { useVehiculos } from '../../hooks/useVehiculos'
 import { formatFecha, hoyISO, paletaEstado } from '../../lib/estados'
 import type { DetallePedido } from '../../lib/types'
 
@@ -75,8 +76,13 @@ export default function VerPedidoPage() {
 
   const [modalAsignar, setModalAsignar] = useState(false)
   const [nombreVehiculo, setNombreVehiculo] = useState('')
+  const [vehiculoSeleccionado, setVehiculoSeleccionado] = useState('')
+  const [esOtroVehiculo, setEsOtroVehiculo] = useState(false)
   const [entregador, setEntregador] = useState('')
   const [fechaEntrega, setFechaEntrega] = useState(hoyISO)
+
+  const vehiculosQuery = useVehiculos()
+  const vehiculos = vehiculosQuery.data ?? []
 
   const [modalEntregado, setModalEntregado] = useState(false)
   // Fecha con la que se registra el resultado de la entrega: hoy por defecto, editable.
@@ -295,7 +301,7 @@ export default function VerPedidoPage() {
           aria-label="Ruta de navegación"
           className="flex flex-wrap items-center gap-2 font-label-md text-label-md text-on-surface-variant"
         >
-          <Link to="/estado-pedidos" className="inline-flex min-h-[44px] items-center transition-colors hover:text-primary-container">
+          <Link to="/estado-pedidos" className="inline-flex min-h-[44px] min-w-[44px] items-center transition-colors hover:text-primary-container">
             Inicio
           </Link>
           <span>/</span>
@@ -448,9 +454,27 @@ export default function VerPedidoPage() {
                   type="button"
                   disabled={isPending}
                   onClick={() => {
-                    setNombreVehiculo(pedido.nombreVehiculo || '')
+                    const actual = pedido.nombreVehiculo || ''
+                    setNombreVehiculo(actual)
                     setEntregador(pedido.entregador || '')
                     setFechaEntrega(pedido.fechaEntrega || hoyISO())
+
+                    if (vehiculos.length > 0) {
+                      const existe = vehiculos.some((v) => v.Nombre === actual)
+                      if (actual && !existe) {
+                        setVehiculoSeleccionado('__otro__')
+                        setEsOtroVehiculo(true)
+                      } else if (existe) {
+                        setVehiculoSeleccionado(actual)
+                        setEsOtroVehiculo(false)
+                      } else {
+                        setVehiculoSeleccionado('')
+                        setEsOtroVehiculo(false)
+                      }
+                    } else {
+                      setEsOtroVehiculo(true)
+                    }
+
                     setModalAsignar(true)
                   }}
                   className="inline-flex min-h-[44px] items-center gap-1.5 rounded-lg bg-primary-container px-5 py-2 font-label-md text-label-md font-semibold text-white shadow-xs transition-colors hover:bg-primary-container/90 disabled:opacity-50"
@@ -946,20 +970,74 @@ export default function VerPedidoPage() {
             </div>
 
             <form onSubmit={handleConfirmarAsignacion} className="mt-4 space-y-4">
-              <div className="space-y-1.5">
-                <label htmlFor="nombreVehiculo" className="block font-body-md-bold text-xs text-ink">
-                  Vehículo <span className="text-error">*</span>
-                </label>
-                <input
-                  id="nombreVehiculo"
-                  type="text"
-                  required
-                  value={nombreVehiculo}
-                  onChange={(e) => setNombreVehiculo(e.target.value)}
-                  placeholder="Nombre o identificador del vehículo"
-                  className="min-h-[46px] w-full rounded-lg border border-field bg-white px-3 font-body-md text-sm text-ink focus:border-success focus:outline-none focus:ring-2 focus:ring-success/20"
-                />
-              </div>
+              {vehiculos.length === 0 ? (
+                <div className="space-y-1.5">
+                  <label htmlFor="nombreVehiculo" className="block font-body-md-bold text-xs text-ink">
+                    Vehículo <span className="text-error">*</span>
+                  </label>
+                  <input
+                    id="nombreVehiculo"
+                    type="text"
+                    required
+                    value={nombreVehiculo}
+                    onChange={(e) => setNombreVehiculo(e.target.value)}
+                    placeholder="Nombre o identificador del vehículo"
+                    className="min-h-[46px] w-full rounded-lg border border-field bg-white px-3 font-body-md text-sm text-ink focus:border-success focus:outline-none focus:ring-2 focus:ring-success/20"
+                  />
+                </div>
+              ) : (
+                <>
+                  <div className="space-y-1.5">
+                    <label htmlFor="selectVehiculo" className="block font-body-md-bold text-xs text-ink">
+                      Vehículo <span className="text-error">*</span>
+                    </label>
+                    <select
+                      id="selectVehiculo"
+                      required
+                      value={vehiculoSeleccionado}
+                      onChange={(e) => {
+                        const val = e.target.value
+                        setVehiculoSeleccionado(val)
+                        if (val === '__otro__') {
+                          setEsOtroVehiculo(true)
+                          setNombreVehiculo('')
+                        } else {
+                          setEsOtroVehiculo(false)
+                          setNombreVehiculo(val)
+                        }
+                      }}
+                      className="min-h-[46px] w-full rounded-lg border border-field bg-white px-3 font-body-md text-sm text-ink focus:border-success focus:outline-none focus:ring-2 focus:ring-success/20"
+                    >
+                      <option value="">Seleccione un vehículo...</option>
+                      {vehiculos.map((v) => (
+                        <option key={v.idVehiculo} value={v.Nombre ?? ''}>
+                          {v.Nombre} {v.tipoVehiculo ? `(${v.tipoVehiculo})` : ''}{' '}
+                          {v.patente ? `- ${v.patente}` : ''}
+                        </option>
+                      ))}
+                      <option value="__otro__">Otro (escribir)</option>
+                    </select>
+                  </div>
+
+                  {esOtroVehiculo && (
+                    <div className="space-y-1.5">
+                      <label htmlFor="nombreVehiculoOtro" className="block font-body-md-bold text-xs text-ink">
+                        Especificar Vehículo <span className="text-error">*</span>
+                      </label>
+                      <input
+                        id="nombreVehiculoOtro"
+                        type="text"
+                        required
+                        value={nombreVehiculo}
+                        onChange={(e) => setNombreVehiculo(e.target.value)}
+                        placeholder="Nombre o identificador del vehículo"
+                        className="min-h-[46px] w-full rounded-lg border border-field bg-white px-3 font-body-md text-sm text-ink focus:border-success focus:outline-none focus:ring-2 focus:ring-success/20"
+                        autoFocus
+                      />
+                    </div>
+                  )}
+                </>
+              )}
 
               <div className="space-y-1.5">
                 <label htmlFor="entregador" className="block font-body-md-bold text-xs text-ink">

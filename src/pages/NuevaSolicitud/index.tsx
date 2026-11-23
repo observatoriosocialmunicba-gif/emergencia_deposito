@@ -567,7 +567,7 @@ export default function NuevaSolicitudPage() {
           aria-label="Migas de pan"
           className="flex flex-wrap items-center gap-2 font-label-md text-label-md text-on-surface-variant"
         >
-          <Link to="/estado-pedidos" className="inline-flex min-h-[44px] items-center transition-colors hover:text-primary-container">
+          <Link to="/estado-pedidos" className="inline-flex min-h-[44px] min-w-[44px] items-center transition-colors hover:text-primary-container">
             Inicio
           </Link>
           <ChevronRight size={14} />
@@ -660,7 +660,7 @@ export default function NuevaSolicitudPage() {
                   ? 'font-bold text-primary underline'
                   : personaSeleccionada
                     ? 'text-on-surface-variant hover:text-primary'
-                    : 'cursor-not-allowed text-outline/40'
+                    : 'cursor-not-allowed text-outline'
               }`}
             >
               2. Pedido
@@ -676,7 +676,7 @@ export default function NuevaSolicitudPage() {
                   ? 'font-bold text-primary underline'
                   : personaSeleccionada && barrio && direccion && procedencia
                     ? 'text-on-surface-variant hover:text-primary'
-                    : 'cursor-not-allowed text-outline/40'
+                    : 'cursor-not-allowed text-outline'
               }`}
             >
               3. Artículos
