@@ -60,7 +60,11 @@ export default function TablaPedidos({
               <th
                 key={c}
                 scope="col"
-                className={`px-4 py-3.5 font-bold ${i >= columnas.length - 2 ? 'text-center' : ''}`}
+                className={`px-3 py-3.5 font-bold xl:px-4 ${i >= columnas.length - 2 ? 'text-center' : ''} ${
+                  i === columnas.length - 1
+                    ? 'sticky right-0 z-10 bg-primary-container shadow-[-6px_0_8px_-6px_rgba(0,0,0,0.35)]'
+                    : ''
+                }`}
               >
                 {c}
               </th>
@@ -109,7 +113,7 @@ export default function TablaPedidos({
                 <td className="whitespace-nowrap px-4 py-3.5 text-center text-sm text-ink-soft">
                   {p.ultModificacion ?? '-'}
                 </td>
-                <td className="whitespace-nowrap px-4 py-3.5 text-center">
+                <td className="sticky right-0 z-10 whitespace-nowrap bg-inherit px-3 py-3.5 text-center shadow-[-6px_0_8px_-6px_rgba(0,0,0,0.2)] xl:px-4">
                   <BotonVerPedido id={p.id} />
                 </td>
               </tr>
