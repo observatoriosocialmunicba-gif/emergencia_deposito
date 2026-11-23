@@ -177,11 +177,10 @@ export default function SolicitudesPage() {
                 key={est}
                 type="button"
                 onClick={() => handleSeleccionarEstado(est)}
-                className={`flex flex-col justify-between rounded-xl border p-3 text-left shadow-xs transition-all ${
-                  activo
-                    ? 'border-primary ring-2 ring-primary/20 bg-white'
-                    : 'border-line bg-white hover:border-outline hover:bg-panel'
-                }`}
+                className={`flex flex-col justify-between rounded-xl border p-3 text-left shadow-xs transition-all ${activo
+                  ? 'border-primary ring-2 ring-primary/20 bg-white'
+                  : 'border-line bg-white hover:border-outline hover:bg-panel'
+                  }`}
               >
                 <div className="flex items-center justify-between text-xs text-on-surface-variant">
                   <span className="font-semibold truncate">{est}</span>

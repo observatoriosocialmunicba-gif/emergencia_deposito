@@ -1,7 +1,17 @@
-import { AtSign, CircleAlert, Eye, EyeOff, Lock, LogIn, ShieldCheck, X } from 'lucide-react'
+import {
+  AtSign,
+  CheckCircle2,
+  CircleAlert,
+  Eye,
+  EyeOff,
+  Lock,
+  LogIn,
+  ShieldCheck,
+  X,
+} from 'lucide-react'
 import { useState } from 'react'
 import type { FormEvent } from 'react'
-import { Link, Navigate, useNavigate } from 'react-router-dom'
+import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom'
 import logo from '../../assets/logo-secretaria.png'
 import { useAuth } from '../../context/AuthContext'
 import { iniciarSesion } from '../../services/authService'
@@ -14,6 +24,9 @@ const input =
 export default function LoginPage() {
   const { session, loading } = useAuth()
   const navigate = useNavigate()
+  const passwordCambiada = Boolean(
+    (useLocation().state as { passwordCambiada?: boolean } | null)?.passwordCambiada,
+  )
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [verPassword, setVerPassword] = useState(false)
@@ -54,6 +67,19 @@ export default function LoginPage() {
         <p className="mb-6 mt-2 font-readex text-sm leading-relaxed text-ink-soft md:text-base">
           Coloca tu Email y Contraseña para comenzar.
         </p>
+
+        {passwordCambiada && (
+          <div
+            role="status"
+            className="mb-4 flex items-start gap-3 rounded-lg border border-secondary/30 bg-surface-container p-4"
+          >
+            <CheckCircle2 size={20} className="mt-0.5 shrink-0 text-secondary" />
+            <p className="font-readex text-xs leading-snug text-on-surface-variant md:text-sm">
+              <span className="block font-bold text-secondary">Contraseña actualizada</span>
+              Ya podés ingresar con tu contraseña nueva.
+            </p>
+          </div>
+        )}
 
         <form onSubmit={entrar} className="space-y-4">
           <div className="space-y-1.5">

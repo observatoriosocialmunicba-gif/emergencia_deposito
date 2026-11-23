@@ -11,6 +11,7 @@ import DashboardPage from './pages/Dashboard'
 import EstadoPedidosPage from './pages/EstadoPedidos'
 import HistorialPedidosPage from './pages/HistorialPedidos'
 import LoginPage from './pages/Login'
+import NuevaPasswordPage from './pages/NuevaPassword'
 import NuevaSolicitudPage from './pages/NuevaSolicitud'
 import PanelEntregasPage from './pages/PanelEntregas'
 import PerfilPage from './pages/Perfil'
@@ -57,6 +58,7 @@ export default function App() {
               path="/recuperar-password"
               element={<RecuperarPasswordPage />}
             />
+            <Route path="/nueva-password" element={<NuevaPasswordPage />} />
 
             <Route element={<ProtectedRoute />}>
               <Route element={<AppLayout />}>

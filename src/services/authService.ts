@@ -13,6 +13,15 @@ function traducirError(message: string): string {
   if (/password should be at least/i.test(message)) {
     return 'La contraseña debe tener al menos 6 caracteres.'
   }
+  if (/different from the old password/i.test(message)) {
+    return 'La contraseña nueva tiene que ser distinta de la anterior.'
+  }
+  if (/rate limit|too many requests|after \d+ seconds/i.test(message)) {
+    return 'Hiciste demasiados intentos. Esperá unos minutos y probá de nuevo.'
+  }
+  if (/auth session missing/i.test(message)) {
+    return 'El link venció. Pedí uno nuevo desde "Olvidaste tu contraseña".'
+  }
   return message
 }
 
@@ -30,8 +39,16 @@ export async function recuperarPassword(
   email: string,
 ): Promise<{ error: string | null }> {
   const { error } = await supabase.auth.resetPasswordForEmail(email, {
-    redirectTo: `${window.location.origin}/login`,
+    redirectTo: `${window.location.origin}/nueva-password`,
   })
+  return { error: error ? traducirError(error.message) : null }
+}
+
+/** Guarda la contraseña nueva de la sesión actual (la de recuperación o la normal). */
+export async function actualizarPassword(
+  password: string,
+): Promise<{ error: string | null }> {
+  const { error } = await supabase.auth.updateUser({ password })
   return { error: error ? traducirError(error.message) : null }
 }
 
